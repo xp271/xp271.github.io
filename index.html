@@ -3,155 +3,154 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>暗黑重铸作品集</title>
-<meta name="description" content="暗黑重铸 Darkforge：《艾尔登法环》刷宝大修模组的求职作品集——系统设计、数值模型、四个迭代案例与复盘。">
+<title>暗黑重铸 Darkforge · 作品集</title>
+<meta name="description" content="Xiangpeng Deng 的游戏系统策划 / 技术策划作品集：《艾尔登法环》刷宝大修模组「暗黑重铸」的系统设计、数值模型、迭代案例与复盘。">
+<meta name="theme-color" content="#0c0b09">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://xp271.github.io/">
 <meta property="og:title" content="暗黑重铸 Darkforge · 作品集">
-<meta property="og:description" content="《艾尔登法环》刷宝大修模组：随机装备与词条、掉落与难度、数值模型、32 天 58 个版本。">
-<meta property="og:image" content="cover.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23c9a24a' stroke-width='6'/%3E%3C/svg%3E">
+<meta property="og:description" content="《艾尔登法环》刷宝大修模组：随机装备与词条、掉落与难度、数值模型，32 天 58 个版本。">
+<meta property="og:image" content="https://xp271.github.io/cover.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23d8b25a' stroke-width='6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+XiaoWei&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+XiaoWei&display=swap"></noscript>
 <style>
 :root {
-  --bg: #f5f2ec;
-  --surface: #fffdf8;
-  --surface-2: #efebe3;
-  --ink: #1e1b17;
-  --ink-2: #4a443b;
-  --muted: #776e62;
-  --line: #e0d9cc;
-  --gold: #8f6a12;
-  --gold-fill: #b8892a;
-  --purple: #6a3d9c;
-  --blue: #2c5a98;
-  --grey: #6a665f;
-  --on-gold: #fffaf0;
-  --shadow: 0 1px 2px rgba(40, 30, 10, .06), 0 6px 24px rgba(40, 30, 10, .05);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f0e0c;
-    --surface: #181613;
-    --surface-2: #211e1a;
-    --ink: #ede7db;
-    --ink-2: #c1b8a8;
-    --muted: #8f8677;
-    --line: #2f2b25;
-    --gold: #dcb75d;
-    --gold-fill: #c9a24a;
-    --purple: #b68ce8;
-    --blue: #7fa6e2;
-    --grey: #a8a39a;
-    --on-gold: #17130a;
-    --shadow: none;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f0e0c;
-  --surface: #181613;
-  --surface-2: #211e1a;
-  --ink: #ede7db;
-  --ink-2: #c1b8a8;
+  --bg: #0c0b09;
+  --bg-2: #12100d;
+  --surface: #191612;
+  --surface-2: #221e19;
+  --line: rgba(232, 214, 170, .12);
+  --line-2: rgba(232, 214, 170, .22);
+  --ink: #efe8da;
+  --ink-2: #c6bcaa;
   --muted: #8f8677;
-  --line: #2f2b25;
-  --gold: #dcb75d;
-  --gold-fill: #c9a24a;
-  --purple: #b68ce8;
-  --blue: #7fa6e2;
-  --grey: #a8a39a;
+  --gold: #d8b25a;
+  --gold-2: #f0d48a;
   --on-gold: #17130a;
-  --shadow: none;
+  --blue: #84a9e4;
+  --purple: #b88de9;
+  --grey: #aaa49a;
+  --display: "ZCOOL XiaoWei", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
+  --sans: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: "Noto Sans SC", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 16px;
-  line-height: 1.75;
-  overflow-x: hidden;
-}
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 64px; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.75; overflow-x: hidden; }
 img { max-width: 100%; height: auto; display: block; }
-a { color: var(--gold); text-underline-offset: 3px; }
-.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+a { color: var(--gold-2); text-underline-offset: 3px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
 @media (min-width: 720px) { .wrap { padding: 0 32px; } }
-.mono { font-family: "JetBrains Mono", ui-monospace, Consolas, monospace; }
-.display { font-family: "ZCOOL XiaoWei", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif; font-weight: 400; }
-
-/* nav */
-nav.top {
-  position: sticky; top: 0; z-index: 10;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--line);
+.mono { font-family: var(--mono); }
+p { margin: 0 0 12px; }
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
 }
-nav.top .wrap { display: flex; align-items: center; gap: 20px; height: 52px; }
-nav.top .brand { font-family: "ZCOOL XiaoWei", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif; font-size: 19px; color: var(--ink); text-decoration: none; white-space: nowrap; }
-nav.top .links { display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+
+/* ---------- nav ---------- */
+nav.top { position: fixed; inset: 0 0 auto 0; z-index: 20; transition: background .3s, border-color .3s; border-bottom: 1px solid transparent; }
+nav.top.solid { background: rgba(12, 11, 9, .86); backdrop-filter: blur(10px); border-color: var(--line); }
+nav.top .wrap { display: flex; align-items: center; gap: 22px; height: 58px; }
+.brand { font-family: var(--display); font-size: 20px; color: var(--ink); text-decoration: none; white-space: nowrap; letter-spacing: .04em; }
+.brand small { font-family: var(--mono); font-size: 11px; letter-spacing: .25em; color: var(--gold); margin-left: 8px; }
+nav.top .links { display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; min-width: 0; margin-left: auto; }
 nav.top .links::-webkit-scrollbar { display: none; }
 nav.top .links a { color: var(--ink-2); text-decoration: none; font-size: 14px; white-space: nowrap; }
-nav.top .links a:hover { color: var(--gold); }
+nav.top .links a:hover { color: var(--gold-2); }
 
-/* hero */
-.hero { padding: 48px 0 40px; }
-.hero-grid { display: grid; gap: 32px; align-items: center; }
-@media (min-width: 900px) { .hero-grid { grid-template-columns: 5fr 6fr; gap: 44px; } .hero { padding: 72px 0 56px; } }
-.eyebrow { font-size: 13px; letter-spacing: .08em; color: var(--muted); margin: 0 0 12px; }
-h1 { margin: 0; font-family: "ZCOOL XiaoWei", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif; font-weight: 400; font-size: clamp(40px, 8vw, 64px); line-height: 1.1; }
-h1 .en { display: block; font-family: "JetBrains Mono", monospace; font-size: .32em; letter-spacing: .3em; color: var(--gold); margin-top: 10px; }
-.lede { font-size: 18px; color: var(--ink-2); margin: 20px 0 18px; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; padding: 0; list-style: none; }
-.chip { font-size: 13px; padding: 3px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-2); background: var(--surface); }
-.chip.live { border-color: color-mix(in srgb, var(--gold) 55%, var(--line)); color: var(--gold); }
+/* ---------- hero ---------- */
+.hero { position: relative; min-height: min(100svh, 880px); display: flex; flex-direction: column; justify-content: flex-end; background: #000 url("hero.jpg") 65% center / cover no-repeat; }
+.hero::before { content: ""; position: absolute; inset: 0; background:
+  linear-gradient(90deg, rgba(12,11,9,.96) 0%, rgba(12,11,9,.82) 34%, rgba(12,11,9,.25) 70%, rgba(12,11,9,.1) 100%),
+  linear-gradient(0deg, var(--bg) 0%, rgba(12,11,9,0) 30%); }
+@media (max-width: 760px) { .hero::before { background: linear-gradient(0deg, var(--bg) 8%, rgba(12,11,9,.78) 55%, rgba(12,11,9,.55) 100%); } }
+.hero .wrap { position: relative; width: 100%; padding-top: 110px; padding-bottom: 36px; }
+.hero-copy { max-width: 620px; }
+.eyebrow { font-size: 13px; letter-spacing: .12em; color: var(--gold); margin: 0 0 14px; }
+h1 { margin: 0; font-family: var(--display); font-weight: 400; font-size: clamp(60px, 11vw, 116px); line-height: 1.02; letter-spacing: .04em; text-shadow: 0 4px 40px rgba(0,0,0,.6); }
+h1 .en { display: block; font-family: var(--mono); font-size: clamp(14px, 1.6vw, 18px); letter-spacing: .6em; color: var(--gold); margin-top: 14px; }
+.lede { font-size: clamp(16px, 1.6vw, 19px); color: var(--ink-2); margin: 22px 0 20px; max-width: 34em; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; padding: 0; list-style: none; }
+.chip { font-size: 13px; padding: 3px 12px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--ink-2); background: rgba(12,11,9,.45); backdrop-filter: blur(4px); }
+.chip.live { color: var(--gold-2); border-color: rgba(216,178,90,.5); }
 .btns { display: flex; flex-wrap: wrap; gap: 10px; }
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 8px; font-size: 15px; text-decoration: none; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 8px; font-size: 15px; text-decoration: none; border: 1px solid var(--line-2); color: var(--ink); background: rgba(12,11,9,.5); transition: border-color .2s, background .2s; }
 .btn:hover { border-color: var(--gold); }
-.btn.primary { background: var(--gold-fill); border-color: var(--gold-fill); color: var(--on-gold); font-weight: 500; }
-.btn.todo { color: var(--muted); border-style: dashed; cursor: default; }
-.hero figure { margin: 0; }
-.hero figure img { border-radius: 10px; border: 1px solid var(--line); aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
-figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+.btn.primary { background: var(--gold); border-color: var(--gold); color: var(--on-gold); font-weight: 500; }
+.btn.primary:hover { background: var(--gold-2); }
+.btn .tri { width: 0; height: 0; border-left: 8px solid currentColor; border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+.hero-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 46px; }
+@media (min-width: 900px) { .hero-stats { grid-template-columns: repeat(4, 1fr); } }
+.hstat { border: 1px solid var(--line); background: rgba(18,16,13,.72); backdrop-filter: blur(8px); border-radius: 10px; padding: 14px 16px; }
+.hstat .n { font-size: clamp(24px, 3vw, 32px); font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.hstat .n small { font-size: 14px; font-weight: 500; color: var(--ink-2); margin-left: 4px; }
+.hstat .l { font-size: 13px; color: var(--muted); margin-top: 4px; }
 
-/* sections */
-section { padding: 52px 0; border-top: 1px solid var(--line); }
-h2 { font-family: "ZCOOL XiaoWei", "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif; font-weight: 400; font-size: clamp(28px, 5vw, 36px); line-height: 1.2; margin: 0 0 8px; }
-.sec-sub { color: var(--muted); margin: 0 0 28px; max-width: 46em; }
-h3 { font-size: 20px; line-height: 1.4; margin: 0 0 12px; }
-p { margin: 0 0 12px; }
+/* ---------- sections ---------- */
+section { padding: 84px 0; }
+section.alt { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.sec-head { margin-bottom: 36px; max-width: 760px; }
+.sec-no { font-family: var(--mono); font-size: 13px; color: var(--gold); letter-spacing: .2em; }
+h2 { font-family: var(--display); font-weight: 400; font-size: clamp(32px, 5vw, 46px); line-height: 1.15; margin: 6px 0 10px; letter-spacing: .03em; }
+.sec-sub { color: var(--muted); margin: 0; }
+h3 { font-size: 20px; line-height: 1.45; margin: 0 0 10px; }
+figure { margin: 0; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.6; }
+.frame { border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: #000; }
+.frame img { width: 100%; }
+.zoom { cursor: zoom-in; transition: transform .4s ease, filter .4s ease; }
+.frame:hover .zoom { transform: scale(1.02); }
 
-/* brief */
-.brief { display: grid; gap: 14px; }
-@media (min-width: 720px) { .brief { grid-template-columns: 1fr 1fr; } }
-.cell { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); }
-.cell .k { font-size: 13px; color: var(--gold); letter-spacing: .06em; margin-bottom: 6px; }
-.cell p:last-child, .cell ul:last-child { margin-bottom: 0; }
-.cell ul { margin: 0; padding-left: 1.2em; }
+/* ---------- trailer ---------- */
+.trailer { display: grid; gap: 28px; align-items: center; }
+@media (min-width: 900px) { .trailer { grid-template-columns: 7fr 4fr; gap: 40px; } }
+.video { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; border: 1px solid var(--line-2); background: #000 url("cover.jpg") center / cover; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,.18); pointer-events: none; transition: background .3s; }
+.video:hover::after { background: rgba(0,0,0,.05); }
+.video.playing::after { display: none; }
+.play { position: absolute; z-index: 1; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; background: rgba(216,178,90,.92); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 40px rgba(0,0,0,.5), 0 0 0 8px rgba(216,178,90,.18); transition: transform .25s; }
+.play:hover { transform: scale(1.08); }
+.tri-big { width: 0; height: 0; border-left: 24px solid var(--on-gold); border-top: 15px solid transparent; border-bottom: 15px solid transparent; margin-left: 6px; }
+.vlen { position: absolute; z-index: 1; right: 12px; bottom: 10px; font-family: var(--mono); font-size: 12px; color: #fff; background: rgba(0,0,0,.6); padding: 2px 8px; border-radius: 4px; }
+.print-only { display: none; }
+.vstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; margin: 18px 0; }
+.vstats div { background: var(--surface); padding: 12px 10px; text-align: center; }
+.vstats b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+.vstats span { font-size: 12px; color: var(--muted); }
 
-/* numbers */
-.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 28px; }
+/* ---------- cards ---------- */
+.grid2 { display: grid; gap: 14px; }
+@media (min-width: 760px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px 22px 18px; position: relative; }
+.card.rt { border-top: 2px solid var(--c, var(--gold)); }
+.card .k { font-size: 13px; color: var(--c, var(--gold)); letter-spacing: .08em; margin-bottom: 8px; }
+.card p:last-child, .card ul:last-child { margin-bottom: 0; }
+.card ul { margin: 0; padding-left: 1.2em; color: var(--ink-2); }
+.card ul li { margin-bottom: 6px; }
+.card p { color: var(--ink-2); }
+
+/* ---------- numbers ---------- */
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 26px; }
 @media (min-width: 900px) { .stats { grid-template-columns: repeat(4, 1fr); gap: 12px; } }
-.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px; min-width: 0; }
-@media (min-width: 720px) { .stat { padding: 16px 18px; } }
-.stat .n { font-size: 24px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
-@media (min-width: 720px) { .stat .n { font-size: 32px; } }
-.stat .n small { font-size: 15px; font-weight: 500; color: var(--ink-2); margin-left: 4px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.stat .n { font-size: clamp(24px, 3vw, 30px); font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.stat .n small { font-size: 14px; font-weight: 500; color: var(--ink-2); margin-left: 4px; }
 .stat .l { font-size: 14px; color: var(--ink-2); margin-top: 4px; }
 .stat .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; line-height: 1.55; }
-
-/* chart */
-.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 18px 12px; position: relative; }
+.chart-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px 20px 12px; position: relative; }
 .chart-card h3 { font-size: 16px; margin: 0; }
 .chart-card .sub { font-size: 13px; color: var(--muted); margin: 2px 0 10px; }
-#cadence { width: 100%; height: 230px; display: block; }
-#cadence text { font-family: "JetBrains Mono", monospace; font-size: 11px; fill: var(--muted); }
+#cadence { width: 100%; height: 240px; display: block; }
+#cadence text { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
 #cadence .grid { stroke: var(--line); stroke-width: 1; }
-#cadence .bar { fill: var(--gold-fill); }
-#cadence .bar.dim { opacity: .45; }
+#cadence .bar { fill: var(--gold); }
+#cadence .bar.dim { opacity: .35; }
 #cadence .lab { fill: var(--ink-2); font-size: 11.5px; }
 .tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12.5px; line-height: 1.5; padding: 6px 10px; border-radius: 6px; white-space: nowrap; opacity: 0; transform: translate(-50%, -100%); transition: opacity .1s; }
 .tip.on { opacity: 1; }
@@ -159,92 +158,140 @@ details.data { margin-top: 6px; font-size: 13px; color: var(--ink-2); }
 details.data summary { cursor: pointer; color: var(--muted); }
 .tbl-wrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { font-weight: 500; color: var(--muted); font-size: 13px; }
+td { color: var(--ink-2); }
+td:first-child { color: var(--ink); }
 td.num { font-variant-numeric: tabular-nums; }
+.pill { font-family: var(--mono); font-size: 12px; color: var(--gold-2); border: 1px solid rgba(216,178,90,.35); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
 
-/* systems */
-.systems { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
-.sys { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--c, var(--gold)); border-radius: 10px; padding: 18px 20px; }
-.sys h3 { font-size: 18px; margin-bottom: 8px; }
-.sys p { color: var(--ink-2); font-size: 15px; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; padding: 0; list-style: none; }
-.tags li { font-size: 12px; padding: 1px 8px; border-radius: 4px; background: var(--surface-2); color: var(--ink-2); }
+/* ---------- systems ---------- */
+.feature { display: grid; gap: 26px; align-items: center; padding: 34px 0; border-top: 1px solid var(--line); }
+.feature:first-of-type { border-top: 0; padding-top: 0; }
+@media (min-width: 900px) {
+  .feature { grid-template-columns: 5fr 6fr; gap: 56px; }
+  .feature.rev { grid-template-columns: 6fr 5fr; }
+  .feature.rev .f-text { order: 2; }
+}
+.f-no { font-family: var(--mono); font-size: 13px; color: var(--c); letter-spacing: .2em; }
+.feature h3 { font-family: var(--display); font-weight: 400; font-size: clamp(26px, 3vw, 32px); margin: 4px 0 12px; }
+.feature p { color: var(--ink-2); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; }
+.tags li { font-size: 12px; padding: 2px 9px; border-radius: 4px; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); }
+.media-stack { display: grid; gap: 12px; }
+.media-2 { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; justify-content: center; }
+.panel img { border-radius: 6px; }
 
-/* flow */
-.flow { list-style: none; padding: 0; margin: 28px 0 8px; display: grid; gap: 22px; counter-reset: st; }
+.flow { list-style: none; padding: 0; margin: 30px 0 8px; display: grid; gap: 22px; counter-reset: st; }
 @media (min-width: 900px) { .flow { grid-template-columns: repeat(5, 1fr); gap: 26px; } }
 .flow li { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 14px 12px; counter-increment: st; }
-.flow li::before { content: counter(st); font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--gold); display: block; margin-bottom: 2px; }
+.flow li::before { content: "0" counter(st); font-family: var(--mono); font-size: 12px; color: var(--gold); display: block; margin-bottom: 2px; }
 .flow b { display: block; font-size: 15px; margin-bottom: 4px; }
 .flow span { display: block; font-size: 13.5px; color: var(--ink-2); line-height: 1.6; }
-.flow i { display: block; font-style: normal; font-family: "JetBrains Mono", monospace; font-size: 11.5px; color: var(--muted); margin-top: 8px; }
-.flow li:not(:last-child)::after { content: "↓"; position: absolute; left: 50%; bottom: -21px; transform: translateX(-50%); color: var(--muted); font-size: 15px; }
-@media (min-width: 900px) {
-  .flow li:not(:last-child)::after { content: "→"; left: auto; right: -21px; bottom: auto; top: 50%; transform: translateY(-50%); }
-}
+.flow i { display: block; font-style: normal; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 8px; }
+.flow li:not(:last-child)::after { content: "↓"; position: absolute; left: 50%; bottom: -21px; transform: translateX(-50%); color: var(--muted); }
+@media (min-width: 900px) { .flow li:not(:last-child)::after { content: "→"; left: auto; right: -21px; bottom: auto; top: 50%; transform: translateY(-50%); } }
 .loop { font-size: 13.5px; color: var(--muted); }
 
-/* gallery */
-.gallery { display: grid; gap: 18px; }
-@media (min-width: 720px) { .gallery { grid-template-columns: 1fr 1fr; } }
-.gallery figure { margin: 0; }
-.gallery img { border-radius: 8px; border: 1px solid var(--line); width: 100%; }
-.gallery .wide { grid-column: 1 / -1; display: grid; gap: 18px; }
-@media (min-width: 720px) { .gallery .wide { grid-template-columns: 2fr 3fr; align-items: start; } }
+/* ---------- gallery ---------- */
+.gallery { display: grid; gap: 12px; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .gallery { grid-template-columns: repeat(3, 1fr); } .gallery .big { grid-column: span 2; grid-row: span 2; } .gallery .wide { grid-column: 1 / -1; } }
+.gallery figure { position: relative; }
+.gallery .frame { height: 100%; }
+.gallery .frame img { height: 100%; object-fit: cover; }
+.gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 26px 12px 9px; font-size: 12.5px; color: #e9e2d4; background: linear-gradient(0deg, rgba(0,0,0,.78), transparent); border-radius: 0 0 10px 10px; pointer-events: none; }
 
-/* case studies */
-.case { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--c); border-radius: 10px; padding: 22px 20px; margin-bottom: 22px; box-shadow: var(--shadow); }
-@media (min-width: 720px) { .case { padding: 28px 32px; } }
-.case .meta { font-size: 13px; color: var(--c); letter-spacing: .05em; margin-bottom: 4px; }
-.case h3 { font-size: 22px; }
-.case .brief { margin: 14px 0 18px; }
-.case .brief .cell { box-shadow: none; background: var(--surface-2); border-color: transparent; padding: 14px 16px; font-size: 15px; }
-.case .brief .cell .k { color: var(--c); }
+/* ---------- cases ---------- */
+.case { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; margin-bottom: 26px; }
+.case-banner { position: relative; aspect-ratio: 21 / 7; overflow: hidden; background: #000; }
+.case-banner img { width: 100%; height: 100%; object-fit: cover; opacity: .85; }
+.case-banner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--surface) 0%, rgba(25,22,18,0) 60%); }
+.case-body { padding: 24px 20px 22px; border-left: 3px solid var(--c); }
+@media (min-width: 760px) { .case-body { padding: 30px 36px 28px; } }
+.case .meta { font-size: 13px; color: var(--c); letter-spacing: .08em; margin-bottom: 4px; }
+.case h3 { font-size: clamp(21px, 2.4vw, 25px); }
+.case .grid2 { margin: 16px 0 20px; }
+.case .grid2 .card { background: var(--surface-2); border-color: transparent; padding: 14px 16px; font-size: 15px; }
+.case .grid2 .card .k { color: var(--c); }
+.case-cols { display: grid; gap: 22px; }
+@media (min-width: 900px) { .case-cols.has-media { grid-template-columns: 3fr 2fr; gap: 32px; align-items: start; } }
+.case-media .panel { padding: 10px; }
 ol.tl { list-style: none; padding: 0; margin: 0 0 18px; position: relative; }
-ol.tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+ol.tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
 ol.tl > li { position: relative; padding-left: 30px; margin-bottom: 16px; }
 ol.tl > li::before { content: ""; position: absolute; left: 3px; top: 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--surface); border: 2px solid var(--c); }
-.ver { font-family: "JetBrains Mono", monospace; font-size: 12.5px; color: var(--c); margin-right: 8px; }
+.ver { font-family: var(--mono); font-size: 12.5px; color: var(--c); margin-right: 8px; }
 .when { font-size: 12.5px; color: var(--muted); }
-.step { display: grid; grid-template-columns: 3em 1fr; gap: 2px 8px; margin-top: 4px; font-size: 15px; color: var(--ink-2); }
+.step { display: grid; grid-template-columns: 3em 1fr; gap: 2px 8px; margin: 4px 0 0; font-size: 15px; color: var(--ink-2); }
 .step dt { color: var(--muted); font-size: 13px; padding-top: 2px; }
 .step dd { margin: 0; }
-.retro { border-top: 1px dashed var(--line); padding-top: 14px; font-size: 15px; }
-.retro .k { font-size: 13px; color: var(--c); margin-bottom: 4px; letter-spacing: .06em; }
-.retro p { color: var(--ink-2); }
+.retro { border-top: 1px dashed var(--line-2); padding-top: 14px; font-size: 15px; }
+.retro .k { font-size: 13px; color: var(--c); margin-bottom: 4px; letter-spacing: .08em; }
+.retro p { color: var(--ink-2); margin: 0; }
 
-/* retro section */
-.two { display: grid; gap: 14px; }
-@media (min-width: 720px) { .two { grid-template-columns: 1fr 1fr; } }
-.cell ul li { margin-bottom: 6px; color: var(--ink-2); }
+/* ---------- footer ---------- */
+footer { border-top: 1px solid var(--line); padding: 40px 0 56px; color: var(--muted); font-size: 13px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; justify-content: space-between; }
+footer .flinks { display: flex; gap: 18px; flex-wrap: wrap; }
+footer a { color: var(--ink-2); text-decoration: none; }
+footer a:hover { color: var(--gold-2); }
 
-/* credits */
-.credits ul { margin: 0; padding-left: 1.2em; }
-.credits li { margin-bottom: 6px; color: var(--ink-2); font-size: 15px; }
-footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13px; color: var(--muted); }
+/* ---------- lightbox ---------- */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(5,5,4,.92); display: none; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+.lb.on { display: flex; }
+.lb img { max-width: 100%; max-height: 86vh; border-radius: 8px; box-shadow: 0 20px 80px rgba(0,0,0,.6); }
+.lb p { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; color: var(--ink-2); font-size: 14px; margin: 0; padding: 0 16px; }
+
+/* ---------- print（导出 PDF 用浅色） ---------- */
 @page { size: A4; margin: 10mm; }
 @media print {
+  :root { --bg: #fff; --bg-2: #faf8f4; --surface: #fff; --surface-2: #f3efe7; --line: #e2dbcd; --line-2: #d3cab8; --ink: #1d1a16; --ink-2: #463f36; --muted: #776e62; --gold: #8f6a12; --gold-2: #8f6a12; --blue: #2c5a98; --purple: #6a3d9c; --grey: #6a665f; color-scheme: light; }
   html { zoom: .72; }
-  nav.top, .tip, details.data { display: none !important; }
-  body { background: #fff; }
-  section { padding: 24px 0; }
-  .case, .cell, .sys, .stat, .chart-card, .flow li, figure, tr { break-inside: avoid; }
+  nav.top, .tip, details.data, .lb, .video { display: none !important; }
+  .print-only { display: block; }
+  .hero { min-height: 0; background: none; }
+  .hero::before { display: none; }
+  .hero .wrap { padding-top: 10px; }
+  h1, .hstat, .chip, .btn { text-shadow: none; backdrop-filter: none; }
+  .hstat, .chip, .btn { background: #fff; }
+  .btn.primary { color: #fff; }
+  .gallery figcaption { color: #fff; }
+  section { padding: 30px 0; }
+  .js .reveal { opacity: 1 !important; transform: none !important; }
+  .case, .card, .stat, .chart-card, .flow li, figure, tr, .feature { break-inside: avoid; }
+  .hero-stats, .stats { grid-template-columns: repeat(4, 1fr); }
+  .trailer { grid-template-columns: 7fr 4fr; }
+  .grid2 { grid-template-columns: 1fr 1fr; }
+  .feature { grid-template-columns: 5fr 6fr; gap: 32px; padding: 20px 0; }
+  .feature.rev { grid-template-columns: 6fr 5fr; }
+  .feature.rev .f-text { order: 2; }
+  .gallery { grid-template-columns: repeat(3, 1fr); }
+  .gallery .big { grid-column: span 2; grid-row: span 2; }
+  .gallery .wide { grid-column: 1 / -1; }
+  .case-cols.has-media { grid-template-columns: 3fr 2fr; }
+  .flow { grid-template-columns: repeat(5, 1fr); gap: 18px; }
+  .flow li::after { display: none; }
+  .case-banner { aspect-ratio: 21 / 5; }
+  .sec-head, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  .sec-head { break-inside: avoid; }
   a { text-decoration: none; }
 }
 </style>
 </head>
 <body>
 
-<nav class="top" aria-label="页面导航">
+<nav class="top" id="nav" aria-label="页面导航">
   <div class="wrap">
-    <a class="brand" href="#top">暗黑重铸</a>
+    <a class="brand" href="#top">暗黑重铸<small>PORTFOLIO</small></a>
     <div class="links">
+      <a href="#trailer">视频</a>
       <a href="#brief">概要</a>
       <a href="#numbers">数据</a>
       <a href="#systems">系统</a>
-      <a href="#cases">迭代案例</a>
-      <a href="#feedback">玩家建议</a>
+      <a href="#gallery">画面</a>
+      <a href="#cases">案例</a>
+      <a href="#feedback">建议</a>
       <a href="#retro">复盘</a>
       <a href="#credits">声明</a>
     </div>
@@ -252,9 +299,9 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
 </nav>
 
 <header class="hero" id="top">
-  <div class="wrap hero-grid">
-    <div>
-      <p class="eyebrow">求职作品集 · 游戏系统策划 / 技术策划方向</p>
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Xiangpeng Deng · 游戏系统策划 / 技术策划 作品集</p>
       <h1>暗黑重铸<span class="en">DARKFORGE</span></h1>
       <p class="lede">《艾尔登法环》刷宝大修模组：装备随机生成、带稀有度和词条，配出自己的流派，再到更高难度和终局玩法里继续追求。</p>
       <ul class="chips" aria-label="项目状态">
@@ -264,30 +311,64 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
         <li class="chip">GPL-3.0 开源</li>
       </ul>
       <div class="btns">
-        <a class="btn primary" href="https://www.bilibili.com/video/BV1k1sn6bES9/" target="_blank" rel="noopener">宣传视频（2 分 19 秒）</a>
+        <a class="btn primary" href="#trailer"><span class="tri" aria-hidden="true"></span>观看宣传视频</a>
         <a class="btn" href="https://github.com/xp271/darkforge" target="_blank" rel="noopener">源码 · GitHub</a>
         <a class="btn" href="https://docs.qq.com/sheet/DV3p2ZWl5SElKb1Bx" target="_blank" rel="noopener">玩家反馈表</a>
       </div>
     </div>
-    <figure>
-      <img src="cover.jpg" alt="宣传视频封面：一名骑士站在由灰、蓝、紫、金四色组成的裂环前，标题「MOD也能有二阶段？」" width="1600" height="900">
-      <figcaption>B 站宣传视频封面。四色裂环对应四档稀有度；背景图为 AI 生成。没有游戏也可以先看视频和源码。</figcaption>
-    </figure>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">58<small>个版本</small></div><div class="l">32 天，从首个便携版到 v0.10.18</div></div>
+      <div class="hstat"><div class="n">157<small>个词条族</small></div><div class="l">其中 64 个是运行时机制词条</div></div>
+      <div class="hstat"><div class="n">9,958<small>播放</small></div><div class="l">B 站宣传视频 · 589 收藏</div></div>
+      <div class="hstat"><div class="n">354<small>个测试</small></div><div class="l">约 13.3 万行自写代码</div></div>
+    </div>
   </div>
 </header>
 
 <main>
 
-<section id="brief">
+<section id="trailer">
   <div class="wrap">
-    <h2>项目概要</h2>
-    <p class="sec-sub">按「玩家承诺 / 约束 / 我的角色 / 成功标准」四项写清楚这个项目要解决什么。</p>
-    <div class="brief">
-      <div class="cell">
+    <div class="trailer reveal">
+      <div>
+        <div class="video" id="video">
+          <a class="play" href="https://www.bilibili.com/video/BV1k1sn6bES9/" target="_blank" rel="noopener" aria-label="播放宣传视频"><span class="tri-big" aria-hidden="true"></span></a>
+          <span class="vlen">2:19</span>
+        </div>
+        <img class="print-only" src="cover.jpg" alt="宣传视频封面" width="1600" height="900">
+      </div>
+      <div>
+        <span class="sec-no">01 · 宣传视频</span>
+        <h2>两分钟看懂暗黑重铸</h2>
+        <p class="sec-sub">宣传视频由我制作，发布在本人 B 站账号「合尘云风」。封面的四色裂环对应四档稀有度，背景图为 AI 生成。</p>
+        <div class="vstats">
+          <div><b>9,958</b><span>播放</span></div>
+          <div><b>589</b><span>收藏</span></div>
+          <div><b>415</b><span>点赞</span></div>
+          <div><b>340</b><span>投币</span></div>
+          <div><b>150</b><span>分享</span></div>
+          <div><b>147</b><span>评论</span></div>
+        </div>
+        <a class="btn" href="https://www.bilibili.com/video/BV1k1sn6bES9/" target="_blank" rel="noopener">在 B 站打开 ↗</a>
+        <p class="sec-sub" style="margin-top:12px;font-size:12.5px">数据为 2026-11-22 查看，发布后第 6 天。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="brief" class="alt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no">02 · 项目概要</span>
+      <h2>这个项目要解决什么</h2>
+      <p class="sec-sub">按「玩家承诺 / 约束 / 我的角色 / 成功标准」四项写清楚。</p>
+    </div>
+    <div class="grid2 reveal">
+      <div class="card rt" style="--c: var(--grey)">
         <div class="k">玩家承诺</div>
         <p>原版的装备是固定的，拿到就定型。这个模组让每一件掉落都随机生成：底子、补正、属性、稀有度和词条各不相同，玩家可以围绕词条搭流派，通关后还有难度阶梯、斗技场试炼和无尽试炼可以继续刷。</p>
       </div>
-      <div class="cell">
+      <div class="card rt" style="--c: var(--blue)">
         <div class="k">约束</div>
         <ul>
           <li>没有游戏源码和官方编辑器：只能改数据表（regulation 参数）、事件脚本（EMEVD）、角色行为脚本（HKS），再加注入的运行时 DLL。</li>
@@ -296,11 +377,11 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
           <li>玩家大多是普通中文玩家：解压、点「启动」就要能玩，出错要能自动收集诊断信息。</li>
         </ul>
       </div>
-      <div class="cell">
+      <div class="card rt" style="--c: var(--purple)">
         <div class="k">我的角色</div>
         <p>个人项目。我负责玩法与数值设计、需求拆解和取舍、方案验收与测试、打包发布、宣传视频、玩家反馈整理。代码实现大量借助 AI 编程助手（Claude Code）完成，详见文末声明。</p>
       </div>
-      <div class="cell">
+      <div class="card rt" style="--c: var(--gold)">
         <div class="k">成功标准</div>
         <ul>
           <li>玩家能从开局稳定玩到通关后，存档不丢、不卡关。</li>
@@ -314,9 +395,12 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
 
 <section id="numbers">
   <div class="wrap">
-    <h2>数据一览</h2>
-    <p class="sec-sub">均为可核对的数字：版本和条目数来自更新日志，代码行数和测试数来自仓库，播放数据来自 B 站视频页（2026-11-22 查看），反馈数来自玩家反馈表（约数）。</p>
-    <div class="stats">
+    <div class="sec-head reveal">
+      <span class="sec-no">03 · 数据一览</span>
+      <h2>可以核对的数字</h2>
+      <p class="sec-sub">版本和条目数来自更新日志，代码行数和测试数来自仓库，播放数据来自 B 站视频页（2026-11-22 查看），反馈数来自玩家反馈表（约数）。</p>
+    </div>
+    <div class="stats reveal">
       <div class="stat"><div class="n">58<small>个版本</small></div><div class="l">2026-10-21 → 11-21，32 天</div><div class="s">从首个便携版到 v0.10.18</div></div>
       <div class="stat"><div class="n">741<small>条</small></div><div class="l">面向玩家的更新日志</div><div class="s">每条写清改了什么、旧存档怎么处理</div></div>
       <div class="stat"><div class="n">约 13.3<small>万行</small></div><div class="l">项目自己的代码</div><div class="s">Python 6.9 万 · Rust 5.7 万 · 其余为界面和脚本；不含第三方库</div></div>
@@ -326,8 +410,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
       <div class="stat"><div class="n">约 120<small>条</small></div><div class="l">反馈表里的玩家反馈</div><div class="s">约 70 条已完成或修复，约 30 条暂缓，2 条无法复现</div></div>
       <div class="stat"><div class="n">575 → 20<small>秒</small></div><div class="l">数值模型一次 200 轮模拟</div><div class="s">Python 原型移植到 Rust 后</div></div>
     </div>
-
-    <div class="chart-card" id="chart">
+    <div class="chart-card reveal" id="chart">
       <h3>更新节奏：每天发布的更新日志条目</h3>
       <p class="sub">2026-10-21 到 11-21，共 58 个版本。10-26 到 10-29 没有发布，随后 v0.7 一次带来 73 条。</p>
       <svg id="cadence" role="img" aria-label="每天更新日志条目数的柱状图"></svg>
@@ -340,171 +423,246 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
   </div>
 </section>
 
-<section id="systems">
+<section id="systems" class="alt">
   <div class="wrap">
-    <h2>系统设计</h2>
-    <p class="sec-sub">五块核心系统。颜色沿用游戏里的稀有度配色：灰（普通）、蓝（稀有）、紫（史诗）、金（传说）。</p>
-    <div class="systems">
-      <article class="sys" style="--c: var(--gold)">
+    <div class="sec-head reveal">
+      <span class="sec-no">04 · 系统设计</span>
+      <h2>五块核心系统</h2>
+      <p class="sec-sub">配色沿用游戏里的稀有度：灰（普通）、蓝（稀有）、紫（史诗）、金（传说）。</p>
+    </div>
+
+    <div class="feature reveal" style="--c: var(--gold)">
+      <div class="f-text">
+        <span class="f-no">SYSTEM 01</span>
         <h3>装备生成与鉴定</h3>
         <p>敌人和宝箱掉的是「未鉴定物品」，鉴定时在游戏里当场生成一件新装备：随机底子、补正、属性、稀有度和词条。配套一键鉴定、定向鉴定、许愿石，以及装备工坊里的词条继承、武器重铸、超限锻造。</p>
         <ul class="tags"><li>运行时生成</li><li>游戏内界面</li><li>存档内记录</li></ul>
-      </article>
-      <article class="sys" style="--c: var(--purple)">
+      </div>
+      <figure>
+        <div class="panel"><img class="zoom" src="rarity_strip.jpg" alt="同一件武器的四种稀有度图标：灰、蓝、紫、金底光" width="504" height="252" loading="lazy"></div>
+        <figcaption>同一件武器的四档稀有度图标（普通 / 稀有 / 史诗 / 传说）。光效直接烘焙进图标，在原版背包里也能一眼分辨。</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal" style="--c: var(--purple)">
+      <div class="f-text">
+        <span class="f-no">SYSTEM 02</span>
         <h3>词条系统</h3>
-        <p>157 个词条族。数值类直接写进游戏数据；命中触发、附近触发和改变规则的机制类词条（64 个）由运行时 DLL 的规则引擎实现。中文说明按原版护符的写法，带具体数字。装备工坊里有词条百科可查。</p>
-        <ul class="tags"><li>规则引擎</li><li>事件总线</li><li>词条百科</li></ul>
-      </article>
-      <article class="sys" style="--c: var(--blue)">
+        <p>157 个词条族。数值类直接写进游戏数据；命中触发、附近触发和改变规则的机制类词条（64 个）由运行时 DLL 的规则引擎实现。中文说明按原版护符的写法，带具体数字；触发时有对应的光效反馈。装备工坊里有词条百科可查。</p>
+        <ul class="tags"><li>规则引擎</li><li>事件总线</li><li>触发反馈</li><li>词条百科</li></ul>
+      </div>
+      <div class="media-2">
+        <figure>
+          <div class="panel"><img class="zoom" src="affix_icons.jpg" alt="八个自制的词条图标：羽毛、血滴、法球、交叉剑等" width="640" height="320" loading="lazy"></div>
+          <figcaption>自制词条图标，按原版护符的质感绘制。</figcaption>
+        </figure>
+        <figure>
+          <div class="panel"><img class="zoom" src="reticle.jpg" alt="猎印准星标记的三个层数，绿色准星逐层变化" width="780" height="550" loading="lazy"></div>
+          <figcaption>词条「猎印」挂在敌人身上的准星，按层数变化；用掉时会碎裂散开。</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="feature reveal" style="--c: var(--blue)">
+      <div class="f-text">
+        <span class="f-no">SYSTEM 03</span>
         <h3>掉落与数值</h3>
-        <p>敌人按所在地区分强度档，掉落表按档位复制；稀有度概率随档位提高，观察力只影响掉落数量。敌人随机时按地区补血量。离线数值模型用蒙特卡洛模拟整个流程，对比原版强度曲线。</p>
+        <p>敌人按所在地区分强度档，掉落表按档位复制；稀有度概率随档位提高，观察力只影响掉落数量。敌人随机时按地区补血量。离线数值模型用蒙特卡洛模拟整个流程，输出各难度相对原版的强度曲线和词条强度排名。</p>
         <ul class="tags"><li>分档掉落</li><li>蒙特卡洛模型</li><li>Python → Rust</li></ul>
-      </article>
-      <article class="sys" style="--c: var(--grey)">
+      </div>
+      <figure>
+        <div class="frame"><img class="zoom" src="model_curve.jpg" alt="数值模型报告截图：各难度相对原版的战斗力曲线，带 10% 到 90% 区间阴影" width="1100" height="880" loading="lazy"></div>
+        <figcaption>数值模型报告：各档难度的战斗力指数曲线（200 次模拟，浅色带为掉落运气的 10%～90% 区间）。</figcaption>
+      </figure>
+    </div>
+
+    <div class="feature rev reveal" style="--c: var(--grey)">
+      <div class="f-text">
+        <span class="f-no">SYSTEM 04</span>
         <h3>难度与终局</h3>
-        <p>多档局内难度，敌人血量、攻击、抗性和掉落随难度变化。「死亡」以上难度有改版头目、魇化精英和咒痕；另有斗技场试炼、无尽试炼、暗黑商店分阶段解锁、卢恩银行和死亡惩罚。</p>
+        <p>多档局内难度，敌人血量、攻击、抗性和掉落随难度变化。「死亡」以上难度有改版头目、魇化精英和咒痕；七道咒痕可以逐一反转成祝福。另有斗技场试炼、无尽试炼、暗黑商店分阶段解锁、卢恩银行和死亡惩罚。</p>
         <ul class="tags"><li>难度阶梯</li><li>终局循环</li><li>风险与回报</li></ul>
-      </article>
-      <article class="sys" style="--c: var(--gold)">
+      </div>
+      <div class="media-stack">
+        <div class="media-2">
+          <figure><div class="frame"><img class="zoom" src="cover_normal.jpg" alt="普通难度的启动封面：橙色重铸环" width="1200" height="675" loading="lazy"></div></figure>
+          <figure><div class="frame"><img class="zoom" src="cover_hard.jpg" alt="高难度的启动封面：紫色重铸环" width="1200" height="675" loading="lazy"></div></figure>
+        </div>
+        <figure>
+          <div class="panel"><img class="zoom" src="curse_icons.jpg" alt="一组咒痕图标（红色）和对应的祝福图标（金色）" width="1200" height="454" loading="lazy"></div>
+          <figcaption>上：普通难度与高难度两套启动封面。下：咒痕（红）与反转后的祝福（金）图标。</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="feature reveal" style="--c: var(--gold)">
+      <div class="f-text">
+        <span class="f-no">SYSTEM 05</span>
         <h3>工具与管线</h3>
         <p>启动器（Python + WebView2 网页界面）负责每局数据生成、启动游戏、存档定时备份、在线和离线更新、崩溃检测与诊断包导出。开发侧有游戏内测试面板、帧耗时统计和数值模型。</p>
         <ul class="tags"><li>一键生成</li><li>诊断包</li><li>增量更新</li></ul>
-      </article>
+      </div>
+      <figure>
+        <div class="frame"><img class="zoom" src="launcher.jpg" alt="启动器界面：左侧状态面板，右侧一键启动和重随按钮" width="1100" height="620" loading="lazy"></div>
+        <figcaption>启动器界面：选择是否随机敌人、一键启动、重随敌人或物品，左下角可导出诊断包。</figcaption>
+      </figure>
     </div>
 
-    <ol class="flow" aria-label="数据流程">
+    <ol class="flow reveal" aria-label="数据流程">
       <li><b>启动器</b><span>玩家点「启动」或「重新随机」，读取难度和设置。</span><i>Python · WebView2</i></li>
       <li><b>生成游戏数据</b><span>读原版数据表，生成装备底表、掉落表、词条、事件脚本、行为脚本和中文文本。</span><i>多进程并行</i></li>
       <li><b>叠加加载</b><span>不改游戏目录，启动时由注入式加载器把改动叠上去。</span><i>regulation · EMEVD · HKS · msg</i></li>
       <li><b>运行时</b><span>鉴定时生成装备，规则引擎每帧处理机制词条，游戏内界面提供装备工坊。</span><i>Rust DLL · hudhook</i></li>
       <li><b>反馈</b><span>崩溃时自动导出诊断包，玩家在反馈表登记，进入下一个版本。</span><i>诊断包 · 反馈表</i></li>
     </ol>
-    <p class="loop">新版本通过在线或离线增量更新包发给玩家，旧存档里的装备随版本一起迁移。</p>
+    <p class="loop reveal">新版本通过在线或离线增量更新包发给玩家，旧存档里的装备随版本一起迁移。</p>
   </div>
 </section>
 
 <section id="gallery">
   <div class="wrap">
-    <h2>游戏内画面</h2>
-    <p class="sec-sub">截自宣传视频的原始录像和项目里的素材预览图。</p>
-    <div class="gallery">
-      <figure>
-        <img src="fight_33.jpg" alt="头目战画面：玩家与「双月骑士」蕾菈娜交战" width="1280" height="720" loading="lazy">
-        <figcaption>头目战实录：「双月骑士」蕾菈娜。</figcaption>
-      </figure>
-      <figure>
-        <img src="fight_44.jpg" alt="击败头目后的 LEGEND FELLED 提示" width="1280" height="720" loading="lazy">
-        <figcaption>击败头目后的结算画面。</figcaption>
-      </figure>
-      <div class="wide">
-        <figure>
-          <img src="rarity_strip.jpg" alt="同一件武器的四种稀有度图标：灰、蓝、紫、金底光" width="504" height="252" loading="lazy">
-          <figcaption>同一件武器的四档稀有度图标（普通 / 稀有 / 史诗 / 传说）。稀有度光效直接烘焙进图标，在原版背包里也能一眼分辨。</figcaption>
-        </figure>
-        <figure>
-          <img src="grace_strip.jpg" alt="赐福菜单新增功能的一排图标，沿用原版图标的边框风格" width="960" height="244" loading="lazy">
-          <figcaption>赐福菜单里新增功能的图标，沿用原版菜单图标的边框和色调。</figcaption>
-        </figure>
-      </div>
+    <div class="sec-head reveal">
+      <span class="sec-no">05 · 游戏内画面</span>
+      <h2>实机画面</h2>
+      <p class="sec-sub">截自宣传视频的原始录像，点击可放大。</p>
+    </div>
+    <div class="gallery reveal">
+      <figure class="big"><div class="frame"><img class="zoom" src="fight_33.jpg" alt="头目战画面：玩家与「双月骑士」蕾菈娜交战" width="1280" height="720" loading="lazy"></div><figcaption>头目战：「双月骑士」蕾菈娜</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="shot_burst.jpg" alt="雾门前爆发出金色光芒" width="1600" height="900" loading="lazy"></div><figcaption>雾门前的金色爆发</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="shot_vortex.jpg" alt="金色漩涡光效" width="1600" height="900" loading="lazy"></div><figcaption>金色漩涡</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="shot_poison.jpg" alt="绿色毒雾在角色周围扩散" width="1600" height="900" loading="lazy"></div><figcaption>毒雾扩散</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="shot_slash.jpg" alt="头目战中的红色斩击轨迹" width="1600" height="900" loading="lazy"></div><figcaption>头目战中的斩击</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="shot_beast.jpg" alt="近距离的巨大毛发敌人" width="1600" height="900" loading="lazy"></div><figcaption>随机敌人近景</figcaption></figure>
+      <figure class="big"><div class="frame"><img class="zoom" src="fight_44.jpg" alt="击败头目后的 LEGEND FELLED 提示" width="1280" height="720" loading="lazy"></div><figcaption>击败头目：LEGEND FELLED</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="shot_dragon.jpg" alt="青色龙形光效挥出的攻击" width="1600" height="900" loading="lazy"></div><figcaption>青色龙形光效</figcaption></figure>
+      <figure class="wide"><div class="panel"><img class="zoom" src="grace_strip.jpg" alt="赐福菜单新增功能的一排图标，沿用原版图标的边框风格" width="960" height="244" loading="lazy"></div><figcaption style="position:static;background:none;color:var(--muted);padding:10px 0 0">赐福菜单里新增功能的图标，沿用原版菜单图标的边框和色调。</figcaption></figure>
     </div>
   </div>
 </section>
 
-<section id="cases">
+<section id="cases" class="alt">
   <div class="wrap">
-    <h2>迭代案例</h2>
-    <p class="sec-sub">四个案例，每个按「版本 → 观察 → 决定 → 结果」记录，最后写复盘。版本号和日期都能在更新日志里查到。</p>
+    <div class="sec-head reveal">
+      <span class="sec-no">06 · 迭代案例</span>
+      <h2>四个迭代案例</h2>
+      <p class="sec-sub">每个按「版本 → 观察 → 决定 → 结果」记录，最后写复盘。版本号和日期都能在更新日志里查到。</p>
+    </div>
 
-    <article class="case" style="--c: var(--gold)">
-      <div class="meta">案例 1 · 词条设计</div>
-      <h3>「千钧」：一个改变规则的传说词条，五轮迭代</h3>
-      <div class="brief">
-        <div class="cell"><div class="k">设计意图</div><p>戴上传说护符「千钧」后，满蓄力重击一定能打崩敌人架势，让「蓄力重击流」成立；代价是其他攻击不再削减强韧度。</p></div>
-        <div class="cell"><div class="k">约束</div><p>游戏只在命中那一刻判定是否崩架势，引擎改不了，只能每帧读写敌人的强韧度；扫描周围敌人有每帧开销。</p></div>
-      </div>
-      <ol class="tl">
-        <li><span class="ver">v0.7</span><span class="when">2026-10-30</span>
-          <dl class="step"><dt>上线</dt><dd>满蓄力一出手，身边敌人的架势全部压低；头目改为削减强韧度上限的 30%。</dd></dl></li>
-        <li><span class="ver">v0.8.1</span><span class="when">11-01</span>
-          <dl class="step"><dt>决定</dt><dd>「千钧」「见切」「猎印」这类要看周围敌人的词条，改成只在戴着时才每帧扫描，没戴不花开销。</dd></dl></li>
-        <li><span class="ver">v0.8.5</span><span class="when">11-01</span>
-          <dl class="step"><dt>观察</dt><dd>没打中的敌人也被压架势，不合直觉；头目不挨打时架势很快回满；拉塔恩这类头目不在游戏的「周围角色」列表里，完全吃不到效果。</dd>
-          <dt>决定</dt><dd>改为打中才生效。因为引擎只在命中瞬间判定，所以出手时先扣头目强韧度上限的 30%，打中时连同这一击的削韧一起结算，没打中就加回去；扣掉的部分保持 15 秒不回；头目另外补进「周围敌人」。</dd></dl></li>
-        <li><span class="ver">v0.10.5</span><span class="when">11-13</span>
-          <dl class="step"><dt>决定</dt><dd>削减比例从 30% 提到 40%；满蓄力出招时身上泛起削韧的光，让玩家看得到触发。</dd></dl></li>
-        <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
-          <dl class="step"><dt>观察</dt><dd>玩家反馈：连招里连续两下满蓄力，第二下常常不扣；明明打中了，先扣的强韧度有时又加回去；体型很大的头目有时不扣。</dd>
-          <dt>原因</dt><dd>蓄力标记跨招式残留；「这一击」的结算窗口关得太晚；距离没有减去敌人的碰撞半径。</dd>
-          <dt>决定</dt><dd>每次新的蓄力开始时先结算上一击；命中判定加上「强韧度下降」和「崩架势」两种信号；距离按体型修正；把连续蓄力的场景写成单元测试。</dd></dl></li>
-      </ol>
-      <div class="retro">
-        <div class="k">复盘</div>
-        <p>「先扣后打」是被引擎判定时机逼出来的方案，玩法上成立。后面几轮问题都出在「一击从哪开始、到哪结束」没定义清楚。v0.10.16 把这个边界写进了测试，之后再改这条规则可以先跑测试；游戏内的最终效果还在等玩家确认。</p>
+    <article class="case reveal" style="--c: var(--gold)">
+      <div class="case-banner"><img src="shot_slash.jpg" alt="" width="1600" height="900" loading="lazy"></div>
+      <div class="case-body">
+        <div class="meta">案例 1 · 词条设计</div>
+        <h3>「千钧」：一个改变规则的传说词条，五轮迭代</h3>
+        <div class="grid2">
+          <div class="card"><div class="k">设计意图</div><p>戴上传说护符「千钧」后，满蓄力重击一定能打崩敌人架势，让「蓄力重击流」成立；代价是其他攻击不再削减强韧度。</p></div>
+          <div class="card"><div class="k">约束</div><p>游戏只在命中那一刻判定是否崩架势，引擎改不了，只能每帧读写敌人的强韧度；扫描周围敌人有每帧开销。</p></div>
+        </div>
+        <ol class="tl">
+          <li><span class="ver">v0.7</span><span class="when">2026-10-30</span>
+            <dl class="step"><dt>上线</dt><dd>满蓄力一出手，身边敌人的架势全部压低；头目改为削减强韧度上限的 30%。</dd></dl></li>
+          <li><span class="ver">v0.8.1</span><span class="when">11-01</span>
+            <dl class="step"><dt>决定</dt><dd>「千钧」「见切」「猎印」这类要看周围敌人的词条，改成只在戴着时才每帧扫描，没戴不花开销。</dd></dl></li>
+          <li><span class="ver">v0.8.5</span><span class="when">11-01</span>
+            <dl class="step"><dt>观察</dt><dd>没打中的敌人也被压架势，不合直觉；头目不挨打时架势很快回满；拉塔恩这类头目不在游戏的「周围角色」列表里，完全吃不到效果。</dd>
+            <dt>决定</dt><dd>改为打中才生效。因为引擎只在命中瞬间判定，所以出手时先扣头目强韧度上限的 30%，打中时连同这一击的削韧一起结算，没打中就加回去；扣掉的部分保持 15 秒不回；头目另外补进「周围敌人」。</dd></dl></li>
+          <li><span class="ver">v0.10.5</span><span class="when">11-13</span>
+            <dl class="step"><dt>决定</dt><dd>削减比例从 30% 提到 40%；满蓄力出招时身上泛起削韧的光，让玩家看得到触发。</dd></dl></li>
+          <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
+            <dl class="step"><dt>观察</dt><dd>玩家反馈：连招里连续两下满蓄力，第二下常常不扣；明明打中了，先扣的强韧度有时又加回去；体型很大的头目有时不扣。</dd>
+            <dt>原因</dt><dd>蓄力标记跨招式残留；「这一击」的结算窗口关得太晚；距离没有减去敌人的碰撞半径。</dd>
+            <dt>决定</dt><dd>每次新的蓄力开始时先结算上一击；命中判定加上「强韧度下降」和「崩架势」两种信号；距离按体型修正；把连续蓄力的场景写成单元测试。</dd></dl></li>
+        </ol>
+        <div class="retro">
+          <div class="k">复盘</div>
+          <p>「先扣后打」是被引擎判定时机逼出来的方案，玩法上成立。后面几轮问题都出在「一击从哪开始、到哪结束」没定义清楚。v0.10.16 把这个边界写进了测试，之后再改这条规则可以先跑测试；游戏内的最终效果还在等玩家确认。</p>
+        </div>
       </div>
     </article>
 
-    <article class="case" style="--c: var(--purple)">
-      <div class="meta">案例 2 · 工程与玩家信任</div>
-      <h3>启动器被安全软件拦截：先改特征，再换掉根源</h3>
-      <div class="brief">
-        <div class="cell"><div class="k">问题</div><p>部分安全软件（如火绒的「系统加固」）在玩家打开启动器、点按钮、崩溃检测时弹出「利用 PowerShell 执行可疑脚本」，玩家会以为整合包带毒。</p></div>
-        <div class="cell"><div class="k">约束</div><p>不能要求玩家去改安全软件设置；启动器同时负责启动、数据生成、诊断包和更新，不能停更去重写。</p></div>
-      </div>
-      <ol class="tl">
-        <li><span class="ver">v0.10.7</span><span class="when">2026-11-14</span>
-          <dl class="step"><dt>决定</dt><dd>先去掉最像恶意脚本的几个特征：不再隐藏窗口启动、不再传编码过的命令、不再从系统临时文件夹运行；诊断包也不再读取杀毒软件的记录。</dd></dl></li>
-        <li><span class="ver">v0.10.14</span><span class="when">11-18</span>
-          <dl class="step"><dt>观察</dt><dd>仍有安全软件把整合包误报成病毒。</dd>
-          <dt>决定</dt><dd>启动器整体从 PowerShell 改写为 Python（随包带运行环境）+ WebView2 网页界面，不再经过 Windows 的脚本程序；界面和用法保持不变；去掉「经典界面」，只维护一套。旧脚本保留下来做对照测试。</dd>
-          <dt>结果</dt><dd>触发这类拦截的条件（运行 PowerShell 脚本）不再存在；玩家不需要重新学习操作。</dd></dl></li>
-      </ol>
-      <div class="retro">
-        <div class="k">复盘</div>
-        <p>第一次只改了特征，规则一变就可能再被拦。第二次的迁移成本高得多，但处理的是根源。以后遇到「玩家信任」类问题，会更早评估是否直接换掉触发条件。</p>
-      </div>
-    </article>
-
-    <article class="case" style="--c: var(--blue)">
-      <div class="meta">案例 3 · 数值</div>
-      <h3>数值曲线：从「感觉偏强」到可以重跑的模型</h3>
-      <div class="brief">
-        <div class="cell"><div class="k">问题</div><p>随机装备、157 个词条和敌人随机叠在一起，强度没法靠手感判断；前身项目留下的强度模型基于旧数据，已经不准。</p></div>
-        <div class="cell"><div class="k">约束</div><p>模型必须和游戏里生成装备的逻辑一致，否则结论没有意义；改一次数值后要能很快重跑。</p></div>
-      </div>
-      <ol class="tl">
-        <li><span class="ver">搭建</span><span class="when">2026-10-30</span>
-          <dl class="step"><dt>做法</dt><dd>直接调用游戏内鉴定用的同一份 Rust 代码导出装备池（每类每档 400 件），用蒙特卡洛模拟一个角色按流程拿装备、配装、打敌人；对比「原版 / 不随机敌人 / 随机敌人」三种模式，输出强度曲线和词条强度排名。</dd>
-          <dt>提速</dt><dd>Python 版 200 轮要 575 秒，移植到 Rust 后 20 秒；两版的词条排名一致，其余差异在随机种子误差以内。</dd></dl></li>
-        <li><span class="ver">v0.9</span><span class="when">11-04</span>
-          <dl class="step"><dt>观察</dt><dd>模型显示到幽影之地后期，近战强度约为原版的 12 倍，法术只有 2～3 倍。</dd>
-          <dt>决定</dt><dd>生成的法杖、圣印记补正乘一个随机倍率：普通 0.7～1.3、稀有 0.9～1.5、史诗 1.1～2.1、传说 1.5～2.5，越靠中间越常见。</dd></dl></li>
-        <li><span class="ver">v0.9.7</span><span class="when">11-06</span>
-          <dl class="step"><dt>决定</dt><dd>法球类词条的伤害改为按手上法器的法术补正计算，强化、补正和加点都会影响。</dd></dl></li>
-        <li><span class="ver">v0.10.18</span><span class="when">11-21</span>
-          <dl class="step"><dt>决定</dt><dd>弓也加上按稀有度定范围的补正倍率，远程流派跟上。</dd></dl></li>
-      </ol>
-      <div class="retro">
-        <div class="k">未解决 / 下一步</div>
-        <p>0.10 版的反馈里仍有「前期成型速度太快」。模型现在看的是全流程曲线，开局几个小时的掉落节奏还没有单独校准，这是下一步要补的。</p>
+    <article class="case reveal" style="--c: var(--purple)">
+      <div class="case-body">
+        <div class="meta">案例 2 · 工程与玩家信任</div>
+        <h3>启动器被安全软件拦截：先改特征，再换掉根源</h3>
+        <div class="grid2">
+          <div class="card"><div class="k">问题</div><p>部分安全软件（如火绒的「系统加固」）在玩家打开启动器、点按钮、崩溃检测时弹出「利用 PowerShell 执行可疑脚本」，玩家会以为整合包带毒。</p></div>
+          <div class="card"><div class="k">约束</div><p>不能要求玩家去改安全软件设置；启动器同时负责启动、数据生成、诊断包和更新，不能停更去重写。</p></div>
+        </div>
+        <div class="case-cols has-media">
+          <div>
+            <ol class="tl">
+              <li><span class="ver">v0.10.7</span><span class="when">2026-11-14</span>
+                <dl class="step"><dt>决定</dt><dd>先去掉最像恶意脚本的几个特征：不再隐藏窗口启动、不再传编码过的命令、不再从系统临时文件夹运行；诊断包也不再读取杀毒软件的记录。</dd></dl></li>
+              <li><span class="ver">v0.10.14</span><span class="when">11-18</span>
+                <dl class="step"><dt>观察</dt><dd>仍有安全软件把整合包误报成病毒。</dd>
+                <dt>决定</dt><dd>启动器整体从 PowerShell 改写为 Python（随包带运行环境）+ WebView2 网页界面，不再经过 Windows 的脚本程序；界面和用法保持不变；去掉「经典界面」，只维护一套。旧脚本保留下来做对照测试。</dd>
+                <dt>结果</dt><dd>触发这类拦截的条件（运行 PowerShell 脚本）不再存在；玩家不需要重新学习操作。</dd></dl></li>
+            </ol>
+          </div>
+          <figure class="case-media">
+            <div class="frame"><img class="zoom" src="launcher.jpg" alt="改写后的启动器界面" width="1100" height="620" loading="lazy"></div>
+            <figcaption>改写后的启动器：Python 后端 + 网页界面，玩家看到的布局和操作不变。</figcaption>
+          </figure>
+        </div>
+        <div class="retro">
+          <div class="k">复盘</div>
+          <p>第一次只改了特征，规则一变就可能再被拦。第二次的迁移成本高得多，但处理的是根源。以后遇到「玩家信任」类问题，会更早评估是否直接换掉触发条件。</p>
+        </div>
       </div>
     </article>
 
-    <article class="case" style="--c: var(--grey)">
-      <div class="meta">案例 4 · 兼容与取舍</div>
-      <h3>兼容第三方敌人随机器：先保证玩家不卡关</h3>
-      <div class="brief">
-        <div class="cell"><div class="k">问题</div><p>开敌人随机时，唤灵蜗牛被换到尤米尔的头目场地，两只随从打完只亮血条，蜗牛本体不出现，战斗结束不了。</p></div>
-        <div class="cell"><div class="k">约束</div><p>敌人随机由第三方随机器生成，不随整合包分发，我们只能改交给它的预设；诊断包里没有那一份事件脚本。</p></div>
+    <article class="case reveal" style="--c: var(--blue)">
+      <div class="case-body">
+        <div class="meta">案例 3 · 数值</div>
+        <h3>数值曲线：从「感觉偏强」到可以重跑的模型</h3>
+        <div class="grid2">
+          <div class="card"><div class="k">问题</div><p>随机装备、157 个词条和敌人随机叠在一起，强度没法靠手感判断；前身项目留下的强度模型基于旧数据，已经不准。</p></div>
+          <div class="card"><div class="k">约束</div><p>模型必须和游戏里生成装备的逻辑一致，否则结论没有意义；改一次数值后要能很快重跑。</p></div>
+        </div>
+        <div class="case-cols has-media">
+          <div>
+            <ol class="tl">
+              <li><span class="ver">搭建</span><span class="when">2026-10-30</span>
+                <dl class="step"><dt>做法</dt><dd>直接调用游戏内鉴定用的同一份 Rust 代码导出装备池（每类每档 400 件），用蒙特卡洛模拟一个角色按流程拿装备、配装、打敌人；对比「原版 / 不随机敌人 / 随机敌人」三种模式，输出强度曲线和词条强度排名。</dd>
+                <dt>提速</dt><dd>Python 版 200 轮要 575 秒，移植到 Rust 后 20 秒；两版的词条排名一致，其余差异在随机种子误差以内。</dd></dl></li>
+              <li><span class="ver">v0.9</span><span class="when">11-04</span>
+                <dl class="step"><dt>观察</dt><dd>模型显示到幽影之地后期，近战强度约为原版的 12 倍，法术只有 2～3 倍。</dd>
+                <dt>决定</dt><dd>生成的法杖、圣印记补正乘一个随机倍率：普通 0.7～1.3、稀有 0.9～1.5、史诗 1.1～2.1、传说 1.5～2.5，越靠中间越常见。</dd></dl></li>
+              <li><span class="ver">v0.9.7</span><span class="when">11-06</span>
+                <dl class="step"><dt>决定</dt><dd>法球类词条的伤害改为按手上法器的法术补正计算，强化、补正和加点都会影响。</dd></dl></li>
+              <li><span class="ver">v0.10.18</span><span class="when">11-21</span>
+                <dl class="step"><dt>决定</dt><dd>弓也加上按稀有度定范围的补正倍率，远程流派跟上。</dd></dl></li>
+            </ol>
+          </div>
+          <figure class="case-media">
+            <div class="frame"><img class="zoom" src="model_growth.jpg" alt="数值模型报告截图：等级、血量、武器攻击力等玩家成长小图，原版与暗黑重铸对比" width="1100" height="1180" loading="lazy"></div>
+            <figcaption>模型报告里的玩家成长对比（原版 vs 暗黑重铸普通难度）：等级、血量、武器攻击力、减伤、护符和防具加成等。</figcaption>
+          </figure>
+        </div>
+        <div class="retro">
+          <div class="k">未解决 / 下一步</div>
+          <p>0.10 版的反馈里仍有「前期成型速度太快」。模型现在看的是全流程曲线，开局几个小时的掉落节奏还没有单独校准，这是下一步要补的。</p>
+        </div>
       </div>
-      <ol class="tl">
-        <li><span class="ver">排查</span><span class="when">2026-11-20</span>
-          <dl class="step"><dt>观察</dt><dd>运行日志显示蜗牛在场地里，但从没被激活。外部报告提出的两个原因，对照参数后都排除了。更可能的原因是随机器合并事件时套用了场地模板，关掉了它的 AI 和碰撞，但没有那一局的事件文件，无法证实。</dd></dl></li>
-        <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
-          <dl class="step"><dt>决定</dt><dd>在随机器预设里让两只唤灵蜗牛不再被换走，它们原来的场地照样换成别的头目。损失两只头目的随机性，换来不会卡关。</dd></dl></li>
-      </ol>
-      <div class="retro">
-        <div class="k">复盘</div>
-        <p>根因还没证实。先用最小的改动止住卡关，把排查记录留下，排除掉的方向不再重复追；等拿到能复现的那一局数据再回头处理。</p>
+    </article>
+
+    <article class="case reveal" style="--c: var(--grey)">
+      <div class="case-body">
+        <div class="meta">案例 4 · 兼容与取舍</div>
+        <h3>兼容第三方敌人随机器：先保证玩家不卡关</h3>
+        <div class="grid2">
+          <div class="card"><div class="k">问题</div><p>开敌人随机时，唤灵蜗牛被换到尤米尔的头目场地，两只随从打完只亮血条，蜗牛本体不出现，战斗结束不了。</p></div>
+          <div class="card"><div class="k">约束</div><p>敌人随机由第三方随机器生成，不随整合包分发，我们只能改交给它的预设；诊断包里没有那一份事件脚本。</p></div>
+        </div>
+        <ol class="tl">
+          <li><span class="ver">排查</span><span class="when">2026-11-20</span>
+            <dl class="step"><dt>观察</dt><dd>运行日志显示蜗牛在场地里，但从没被激活。外部报告提出的两个原因，对照参数后都排除了。更可能的原因是随机器合并事件时套用了场地模板，关掉了它的 AI 和碰撞，但没有那一局的事件文件，无法证实。</dd></dl></li>
+          <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
+            <dl class="step"><dt>决定</dt><dd>在随机器预设里让两只唤灵蜗牛不再被换走，它们原来的场地照样换成别的头目。损失两只头目的随机性，换来不会卡关。</dd></dl></li>
+        </ol>
+        <div class="retro">
+          <div class="k">复盘</div>
+          <p>根因还没证实。先用最小的改动止住卡关，把排查记录留下，排除掉的方向不再重复追；等拿到能复现的那一局数据再回头处理。</p>
+        </div>
       </div>
     </article>
   </div>
@@ -512,34 +670,39 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
 
 <section id="feedback">
   <div class="wrap">
-    <h2>部分落地的玩家建议</h2>
-    <p class="sec-sub">玩家反馈表分版本整理（另有约 90 条词条提案）。下面是一部分已经做进版本的功能。</p>
-    <div class="tbl-wrap">
+    <div class="sec-head reveal">
+      <span class="sec-no">07 · 玩家建议</span>
+      <h2>部分落地的玩家建议</h2>
+      <p class="sec-sub">玩家反馈表分版本整理（另有约 90 条词条提案）。下面是一部分已经做进版本的功能。</p>
+    </div>
+    <div class="tbl-wrap reveal">
       <table>
         <thead><tr><th>功能</th><th>做成了什么</th><th>版本</th></tr></thead>
         <tbody>
-          <tr><td>一键出售</td><td>赐福菜单里按部位和稀有度批量出售生成装备</td><td class="mono">v0.5</td></tr>
-          <tr><td>装备锁定</td><td>背包 / 仓库里给装备上锁，防止误卖误丢</td><td class="mono">v0.5</td></tr>
-          <tr><td>敌人随机时补血量</td><td>按地区给敌人补血，后期地区的普通敌人回到原版的相对强度</td><td class="mono">v0.5</td></tr>
-          <tr><td>持续飞行</td><td>战灰「熔炉百相之羽」按住后升空持续飞行，松开俯冲斩</td><td class="mono">v0.5.5</td></tr>
-          <tr><td>第五个护符槽</td><td>打开装备栏里原版没用上的「誓约」槽，多戴一个护符</td><td class="mono">v0.7</td></tr>
-          <tr><td>回购商店</td><td>最近卖掉或丢掉的 50 件生成装备可以按卖价买回</td><td class="mono">v0.7</td></tr>
-          <tr><td>无尽箭袋</td><td>移除旧的箭袋护符，改为传说护符「无尽箭袋」</td><td class="mono">v0.7</td></tr>
-          <tr><td>词条百科</td><td>装备工坊里按部位查所有词条的图标、可出现部位和各稀有度效果</td><td class="mono">v0.9.9</td></tr>
-          <tr><td>卢恩银行</td><td>把卢恩存起来，死亡时不会掉</td><td class="mono">v0.10.1</td></tr>
-          <tr><td>燃血</td><td>传说护符：攻击不耗精力改为耗血，低血量流派的核心</td><td class="mono">v0.10.1</td></tr>
+          <tr><td>一键出售</td><td>赐福菜单里按部位和稀有度批量出售生成装备</td><td><span class="pill">v0.5</span></td></tr>
+          <tr><td>装备锁定</td><td>背包 / 仓库里给装备上锁，防止误卖误丢</td><td><span class="pill">v0.5</span></td></tr>
+          <tr><td>敌人随机时补血量</td><td>按地区给敌人补血，后期地区的普通敌人回到原版的相对强度</td><td><span class="pill">v0.5</span></td></tr>
+          <tr><td>持续飞行</td><td>战灰「熔炉百相之羽」按住后升空持续飞行，松开俯冲斩</td><td><span class="pill">v0.5.5</span></td></tr>
+          <tr><td>第五个护符槽</td><td>打开装备栏里原版没用上的「誓约」槽，多戴一个护符</td><td><span class="pill">v0.7</span></td></tr>
+          <tr><td>回购商店</td><td>最近卖掉或丢掉的 50 件生成装备可以按卖价买回</td><td><span class="pill">v0.7</span></td></tr>
+          <tr><td>无尽箭袋</td><td>移除旧的箭袋护符，改为传说护符「无尽箭袋」</td><td><span class="pill">v0.7</span></td></tr>
+          <tr><td>词条百科</td><td>装备工坊里按部位查所有词条的图标、可出现部位和各稀有度效果</td><td><span class="pill">v0.9.9</span></td></tr>
+          <tr><td>卢恩银行</td><td>把卢恩存起来，死亡时不会掉</td><td><span class="pill">v0.10.1</span></td></tr>
+          <tr><td>燃血</td><td>传说护符：攻击不耗精力改为耗血，低血量流派的核心</td><td><span class="pill">v0.10.1</span></td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<section id="retro">
+<section id="retro" class="alt">
   <div class="wrap">
-    <h2>整体复盘</h2>
-    <p class="sec-sub">32 天、58 个版本之后的总结。</p>
-    <div class="two">
-      <div class="cell">
+    <div class="sec-head reveal">
+      <span class="sec-no">08 · 整体复盘</span>
+      <h2>32 天、58 个版本之后</h2>
+    </div>
+    <div class="grid2 reveal">
+      <div class="card rt" style="--c: var(--gold)">
         <div class="k">做得好的</div>
         <ul>
           <li>发布节奏快，每个版本都有面向玩家的更新日志，写法避开开发术语。</li>
@@ -548,7 +711,7 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
           <li>崩溃时自动导出诊断包，远程排查不依赖玩家描述。</li>
         </ul>
       </div>
-      <div class="cell">
+      <div class="card rt" style="--c: var(--grey)">
         <div class="k">要改进的</div>
         <ul>
           <li>游戏内测试跟不上发布速度：不少修正只有单元测试覆盖，游戏内效果靠玩家确认。</li>
@@ -560,12 +723,15 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
   </div>
 </section>
 
-<section id="credits" class="credits">
+<section id="credits">
   <div class="wrap">
-    <h2>AI 使用与第三方声明</h2>
-    <p class="sec-sub">分清哪些是我做的、哪些来自工具和他人。</p>
-    <div class="two">
-      <div class="cell">
+    <div class="sec-head reveal">
+      <span class="sec-no">09 · 声明</span>
+      <h2>AI 使用与第三方</h2>
+      <p class="sec-sub">分清哪些是我做的、哪些来自工具和他人。</p>
+    </div>
+    <div class="grid2 reveal">
+      <div class="card">
         <div class="k">AI 使用</div>
         <ul>
           <li>代码实现大量使用 Claude Code（Anthropic 的 AI 编程助手）完成。</li>
@@ -573,10 +739,10 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
           <li>宣传视频封面的背景图由 AI 生成。</li>
         </ul>
       </div>
-      <div class="cell">
+      <div class="card">
         <div class="k">第三方</div>
         <ul>
-          <li>《艾尔登法环》的数据、文本、图标和特效版权属于 FromSoftware / Bandai Namco，仅用于制作模组。</li>
+          <li>《艾尔登法环》的数据、文本、图标、特效和画面版权属于 FromSoftware / Bandai Namco，仅用于制作模组。</li>
           <li>词条库最初从 RNG Lands 模组提取，之后重写和扩充。</li>
           <li>敌人随机：thefifthmatt 的 EldenRingRandomizer，不随整合包分发，玩家自行下载。</li>
           <li>开源库：fromsoftware-rs（游戏结构绑定）、hudhook（游戏内界面），启动器界面框架来自 tamikip，玩家行为脚本基于社区的 EldenRingHKS 整理，音效来自 Kenney。</li>
@@ -592,12 +758,69 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
 
 <footer>
   <div class="wrap">
-    页面整理于 2026-11-22。数据来源：项目更新日志、仓库代码统计、B 站视频页、玩家反馈表。链接已于当天核对。
+    <span>Xiangpeng Deng · 游戏系统策划 / 技术策划 · 页面整理于 2026-11-22</span>
+    <span class="flinks">
+      <a href="https://github.com/xp271" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://www.bilibili.com/video/BV1k1sn6bES9/" target="_blank" rel="noopener">B 站宣传视频</a>
+      <a href="https://docs.qq.com/sheet/DV3p2ZWl5SElKb1Bx" target="_blank" rel="noopener">玩家反馈表</a>
+    </span>
   </div>
 </footer>
 
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="图片放大查看"><img alt=""><p></p></div>
+
 <script>
+document.documentElement.classList.add("js");
 (function () {
+  // 导航：滚过首屏后加底色
+  var nav = document.getElementById("nav");
+  function navState() { nav.classList.toggle("solid", window.scrollY > 40); }
+  navState();
+  window.addEventListener("scroll", navState, { passive: true });
+
+  // 宣传视频：先显示封面，点击后才加载 B 站播放器
+  var video = document.getElementById("video");
+  video.querySelector(".play").addEventListener("click", function (e) {
+    e.preventDefault();
+    var f = document.createElement("iframe");
+    f.src = "https://player.bilibili.com/player.html?bvid=BV1k1sn6bES9&autoplay=1&danmaku=0&high_quality=1";
+    f.title = "暗黑重铸宣传视频";
+    f.allow = "autoplay; fullscreen";
+    f.setAttribute("allowfullscreen", "");
+    f.setAttribute("scrolling", "no");
+    video.innerHTML = "";
+    video.appendChild(f);
+    video.classList.add("playing");
+  });
+
+  // 进场动画
+  var els = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add("in"); });
+  }
+  window.addEventListener("beforeprint", function () { els.forEach(function (el) { el.classList.add("in"); }); });
+
+  // 图片放大
+  var lb = document.getElementById("lb"), lbImg = lb.querySelector("img"), lbCap = lb.querySelector("p");
+  document.querySelectorAll("img.zoom").forEach(function (img) {
+    img.addEventListener("click", function () {
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt;
+      var fig = img.closest("figure"), cap = fig && fig.querySelector("figcaption");
+      lbCap.textContent = cap ? cap.textContent : img.alt;
+      lb.classList.add("on");
+    });
+  });
+  function closeLb() { lb.classList.remove("on"); }
+  lb.addEventListener("click", closeLb);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLb(); });
+
+  // 更新节奏柱状图
   var raw = [
     ["10-21", ["v0.2", "v0.2.1"], 21], ["10-22", ["v0.3", "v0.4"], 54], ["10-23", ["v0.4.1", "v0.5", "v0.5.1"], 45],
     ["10-24", ["v0.5.2", "v0.5.3", "v0.5.4", "v0.5.5", "v0.5.6"], 32], ["10-25", ["v0.6.0", "v0.6.1", "v0.6.2"], 18],
@@ -613,25 +836,20 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
   var map = {};
   raw.forEach(function (r) { map[r[0]] = r; });
   var days = [];
-  var d = new Date(Date.UTC(2026, 9, 21));
-  var end = new Date(Date.UTC(2026, 10, 21));
+  var d = new Date(Date.UTC(2026, 9, 21)), end = new Date(Date.UTC(2026, 10, 21));
   while (d <= end) {
     var k = String(d.getUTCMonth() + 1).padStart(2, "0") + "-" + String(d.getUTCDate()).padStart(2, "0");
     var r = map[k];
     days.push({ k: k, v: r ? r[1] : [], n: r ? r[2] : 0 });
     d = new Date(d.getTime() + 86400000);
   }
-
   var tbody = document.querySelector("#cadence-table tbody");
   raw.forEach(function (r) {
     var tr = document.createElement("tr");
     tr.innerHTML = "<td class='mono'>2026-" + r[0] + "</td><td class='mono'>" + r[1].join("、") + "</td><td class='num'>" + r[2] + "</td>";
     tbody.appendChild(tr);
   });
-
-  var svg = document.getElementById("cadence");
-  var tip = document.getElementById("tip");
-  var card = document.getElementById("chart");
+  var svg = document.getElementById("cadence"), tip = document.getElementById("tip"), card = document.getElementById("chart");
   var NS = "http://www.w3.org/2000/svg";
   function el(name, attrs, parent) {
     var e = document.createElementNS(NS, name);
@@ -640,56 +858,36 @@ footer { border-top: 1px solid var(--line); padding: 28px 0 48px; font-size: 13p
     return e;
   }
   function draw() {
-    var W = svg.clientWidth || 600, H = 230;
+    var W = svg.clientWidth || 600, H = 240;
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
     while (svg.firstChild) svg.removeChild(svg.firstChild);
-    var L = 30, R = 6, T = 22, B = 26;
-    var pw = W - L - R, ph = H - T - B;
-    var max = 80;
+    var L = 30, R = 6, T = 22, B = 26, pw = W - L - R, ph = H - T - B, max = 80;
     var y = function (v) { return T + ph - (v / max) * ph; };
     [0, 20, 40, 60, 80].forEach(function (g) {
       el("line", { x1: L, x2: W - R, y1: y(g), y2: y(g), "class": "grid" });
-      var t = el("text", { x: L - 6, y: y(g) + 4, "text-anchor": "end" });
-      t.textContent = g;
+      el("text", { x: L - 6, y: y(g) + 4, "text-anchor": "end" }).textContent = g;
     });
-    var band = pw / days.length;
-    var bw = Math.max(3, Math.min(18, band * 0.62));
-    var step = W < 520 ? 10 : 7;
+    var band = pw / days.length, bw = Math.max(3, Math.min(18, band * 0.62)), step = W < 520 ? 10 : 7;
     days.forEach(function (dd, i) {
       var cx = L + band * i + band / 2;
       if (dd.n > 0) {
         var x0 = cx - bw / 2, y0 = y(dd.n), yb = y(0), r = Math.min(4, bw / 2, yb - y0);
-        el("path", {
-          d: "M" + x0 + "," + yb + " V" + (y0 + r) + " Q" + x0 + "," + y0 + " " + (x0 + r) + "," + y0 +
-             " H" + (x0 + bw - r) + " Q" + (x0 + bw) + "," + y0 + " " + (x0 + bw) + "," + (y0 + r) + " V" + yb + " Z",
-          "class": "bar", "data-i": i
-        });
+        el("path", { d: "M" + x0 + "," + yb + " V" + (y0 + r) + " Q" + x0 + "," + y0 + " " + (x0 + r) + "," + y0 + " H" + (x0 + bw - r) + " Q" + (x0 + bw) + "," + y0 + " " + (x0 + bw) + "," + (y0 + r) + " V" + yb + " Z", "class": "bar", "data-i": i });
       }
-      if (i % step === 0 || i === days.length - 1) {
-        if (i === days.length - 1 && i % step !== 0 && (i % step) < step / 2) return;
-        var t = el("text", { x: cx, y: H - 8, "text-anchor": "middle" });
-        t.textContent = dd.k;
-      }
+      if (i % step === 0) el("text", { x: cx, y: H - 8, "text-anchor": "middle" }).textContent = dd.k;
     });
-    var top = days.reduce(function (a, b) { return b.n > a.n ? b : a; });
-    var ti = days.indexOf(top);
-    var lt = el("text", { x: L + band * ti + band / 2, y: y(top.n) - 7, "text-anchor": "middle", "class": "lab" });
-    lt.textContent = top.n + " · v0.7";
+    var top = days.reduce(function (a, b) { return b.n > a.n ? b : a; }), ti = days.indexOf(top);
+    el("text", { x: L + band * ti + band / 2, y: y(top.n) - 7, "text-anchor": "middle", "class": "lab" }).textContent = top.n + " · v0.7";
     days.forEach(function (dd, i) {
       var hit = el("rect", { x: L + band * i, y: T, width: band, height: ph, fill: "transparent" });
-      hit.style.cursor = "default";
       function show() {
-        var bars = svg.querySelectorAll(".bar");
-        bars.forEach(function (b) { b.classList.toggle("dim", b.getAttribute("data-i") !== String(i)); });
+        svg.querySelectorAll(".bar").forEach(function (b) { b.classList.toggle("dim", b.getAttribute("data-i") !== String(i)); });
         tip.textContent = "2026-" + dd.k + " · " + (dd.n ? dd.v.join("、") + " · " + dd.n + " 条" : "无发布");
         var sr = svg.getBoundingClientRect(), cr = card.getBoundingClientRect();
         var px = sr.left - cr.left + (L + band * i + band / 2) * (sr.width / W);
         var py = sr.top - cr.top + (dd.n ? y(dd.n) : y(0)) * (sr.height / H) - 8;
-        var half = 90;
-        px = Math.max(half, Math.min(cr.width - half, px));
-        tip.style.left = px + "px";
-        tip.style.top = py + "px";
-        tip.classList.add("on");
+        px = Math.max(90, Math.min(cr.width - 90, px));
+        tip.style.left = px + "px"; tip.style.top = py + "px"; tip.classList.add("on");
       }
       hit.addEventListener("mouseenter", show);
       hit.addEventListener("touchstart", show, { passive: true });
