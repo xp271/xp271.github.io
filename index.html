@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>暗黑重铸 Darkforge · 作品集</title>
-<meta name="description" content="Xiangpeng Deng 的游戏系统策划 / 技术策划作品集：《艾尔登法环》刷宝大修模组「暗黑重铸」的系统设计、数值模型、迭代案例与复盘。">
+<meta name="description" content="邓祥鹏（Xiangpeng Deng）的游戏系统策划 / 技术策划作品集：《艾尔登法环》刷宝大修模组「暗黑重铸」的系统设计、数值模型、迭代案例与复盘。">
 <meta name="theme-color" content="#0c0b09">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://xp271.github.io/">
@@ -166,6 +166,24 @@ td.num { font-variant-numeric: tabular-nums; }
 .pill { font-family: var(--mono); font-size: 12px; color: var(--gold-2); border: 1px solid rgba(216,178,90,.35); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
 
 /* ---------- systems ---------- */
+.cmp-wrap { margin: 0 0 44px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 6px 8px; }
+.cmp { min-width: 560px; }
+.cmp th:nth-child(3) { color: var(--gold); }
+.cmp td:first-child { white-space: nowrap; font-weight: 500; color: var(--ink); }
+.cmp td:nth-child(2) { color: var(--muted); width: 22%; }
+.cmp td:nth-child(3) { color: var(--ink); }
+.cmp tr:last-child td { border-bottom: 0; }
+@media (max-width: 640px) {
+  .cmp { min-width: 0; }
+  .cmp thead { display: none; }
+  .cmp, .cmp tbody, .cmp tr, .cmp td { display: block; width: auto !important; }
+  .cmp tr { padding: 12px 6px; border-bottom: 1px solid var(--line); }
+  .cmp tr:last-child { border-bottom: 0; }
+  .cmp td { border: 0; padding: 2px 6px; }
+  .cmp td:first-child { font-size: 15px; color: var(--gold); margin-bottom: 4px; }
+  .cmp td:nth-child(2)::before { content: "原版："; }
+  .cmp td:nth-child(3)::before { content: "暗黑重铸："; color: var(--gold); }
+}
 .feature { display: grid; gap: 26px; align-items: center; padding: 34px 0; border-top: 1px solid var(--line); }
 .feature:first-of-type { border-top: 0; padding-top: 0; }
 @media (min-width: 900px) {
@@ -301,9 +319,9 @@ footer a:hover { color: var(--gold-2); }
 <header class="hero" id="top">
   <div class="wrap">
     <div class="hero-copy">
-      <p class="eyebrow">Xiangpeng Deng · 游戏系统策划 / 技术策划 作品集</p>
+      <p class="eyebrow">邓祥鹏 Xiangpeng Deng · 游戏系统策划 / 技术策划 作品集</p>
       <h1>暗黑重铸<span class="en">DARKFORGE</span></h1>
-      <p class="lede">《艾尔登法环》刷宝大修模组：把原版固定装备的成长改造成以刷宝构筑为核心循环的长线玩法，包含装备随机生成与词条池、分档投放与资源回收、难度阶梯与终局内容。</p>
+      <p class="lede">《艾尔登法环》刷宝大修模组。在原版战斗与地图之上，自主设计了一套独立的装备生成、词条构筑、经济循环与终局玩法系统，而非对原版系统做数值调整。</p>
       <ul class="chips" aria-label="项目状态">
         <li class="chip live">已公开发布 · 持续更新中</li>
         <li class="chip">当前 v0.10.18（2026-11-21）</li>
@@ -366,7 +384,7 @@ footer a:hover { color: var(--gold-2); }
     <div class="grid2 reveal">
       <div class="card rt" style="--c: var(--grey)">
         <div class="k">设计目标</div>
-        <p>原版装备固定、成长线性。目标是建立以刷宝构筑为核心的长线循环：击杀掉落 → 鉴定 → 构筑流派 → 挑战更高难度。每件掉落按底材、补正、元素、稀有度与词条随机生成，通关后由难度阶梯、斗技场试炼与无尽试炼承接终局目标。</p>
+        <p>原版装备固定、成长线性。目标是建立以刷宝构筑为核心的长线循环：击杀掉落 → 鉴定 → 构筑流派 → 挑战更高难度。原版只保留战斗、地图与角色升级作为载体；装备生成、词条、材料与货币流转、难度阶梯和终局玩法均为自主设计的独立系统。</p>
       </div>
       <div class="card rt" style="--c: var(--blue)">
         <div class="k">设计约束</div>
@@ -427,15 +445,30 @@ footer a:hover { color: var(--gold-2); }
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-no">04 · 系统设计</span>
-      <h2>五块核心系统</h2>
-      <p class="sec-sub">配色沿用游戏里的稀有度：灰（普通）、蓝（稀有）、紫（史诗）、金（传说）。</p>
+      <h2>自主设计的独立系统</h2>
+      <p class="sec-sub">战斗、地图与角色升级沿用原版；以下系统的规则、数值与配置均为自主设计，原版没有对应机制，或原有机制被整体替换。配色沿用游戏内稀有度：灰（普通）、蓝（稀有）、紫（史诗）、金（传说）。</p>
+    </div>
+
+    <div class="cmp-wrap reveal">
+      <div class="tbl-wrap">
+        <table class="cmp">
+          <thead><tr><th>系统</th><th>原版</th><th>暗黑重铸（自主设计）</th></tr></thead>
+          <tbody>
+            <tr><td>装备获取</td><td>固定装备，拾取即定型</td><td>掉落未鉴定道具，鉴定时随机生成底材、补正、元素、4 档稀有度与词条</td></tr>
+            <tr><td>构筑</td><td>依靠固定装备与护符组合</td><td>157 个词条族（64 个改变规则）；定向鉴定、许愿石、词条继承与重铸，让玩家朝目标流派推进</td></tr>
+            <tr><td>经济</td><td>卢恩用于升级与购物</td><td>自成循环的装备与材料经济：一键出售、锁定与回购管理装备流转；重铸石、融锻之心、超限锻造石等材料作为消耗出口；暗黑商店以龙心脏与卢恩分区出售；卢恩银行保存货币；死亡遗失部分未鉴定道具</td></tr>
+            <tr><td>难度</td><td>单一难度，周目只提高数值</td><td>多档局内难度；反转七道咒痕解锁「死亡」「不可能」，改版头目与魇化精英改变战斗方式</td></tr>
+            <tr><td>终局</td><td>通关后进入下一周目</td><td>按地区划分头目池的斗技场试炼、逐波递增的无尽试炼、随头目进度分阶段解锁的暗黑商店</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="feature reveal" style="--c: var(--gold)">
       <div class="f-text">
         <span class="f-no">SYSTEM 01</span>
-        <h3>装备随机生成</h3>
-        <p>掉落以未鉴定道具投放，鉴定时按底材、补正、元素、4 档稀有度与词条实时生成装备。配套一键鉴定、定向鉴定与许愿石，以及装备工坊中的词条继承、武器重铸与超限锻造，让玩家对随机结果有可控的追求路径。</p>
+        <h3>装备生成与可控随机</h3>
+        <p>针对纯随机掉落导致目标流派难以成型的问题，设计「可控随机」机制：掉落以未鉴定道具投放，鉴定时按底材、补正、元素、4 档稀有度与词条实时生成；玩家可通过一键鉴定、定向鉴定、许愿石，以及装备工坊中的词条继承、武器重铸与超限锻造，逐步逼近目标装备。</p>
         <ul class="tags"><li>运行时生成</li><li>可控随机</li><li>存档持久化</li></ul>
       </div>
       <figure>
@@ -448,7 +481,7 @@ footer a:hover { color: var(--gold-2); }
       <div class="f-text">
         <span class="f-no">SYSTEM 02</span>
         <h3>词条池与规则引擎</h3>
-        <p>157 个词条族构成词条池，每族配置数值区间、触发条件与互斥分组，支撑多流派构筑。数值型词条直接写入参数配置表；命中触发、范围触发与规则改变型词条（64 个）由运行时规则引擎实现，触发时配有光效反馈。词条描述沿用原版护符的写法并标注具体数值，装备工坊内置词条百科。</p>
+        <p>原版没有随机词条，流派差异主要依赖固定装备。为此设计了 157 个词条族的词条池，每族配置数值区间、触发条件与互斥分组；其中 64 个规则改变型词条由运行时规则引擎实现，用于拉开流派差异，触发时配有光效反馈。词条描述沿用原版护符的写法并标注具体数值，装备工坊内置词条百科。</p>
         <ul class="tags"><li>规则引擎</li><li>事件总线</li><li>触发反馈</li><li>词条百科</li></ul>
       </div>
       <div class="media-2">
@@ -466,9 +499,9 @@ footer a:hover { color: var(--gold-2); }
     <div class="feature reveal" style="--c: var(--blue)">
       <div class="f-text">
         <span class="f-no">SYSTEM 03</span>
-        <h3>资源投放与数值验证</h3>
-        <p>敌人按区域强度分档，掉落表按档位投放稀有度，观察力只影响掉落数量；随机敌人模式下按区域补正敌人血量。离线蒙特卡洛战力模型复用游戏内装备生成代码，模拟全流程成长曲线，输出各难度相对原版的战力指数与词条强度排名。</p>
-        <ul class="tags"><li>分档投放</li><li>成长曲线</li><li>蒙特卡洛模型</li></ul>
+        <h3>掉落经济与成长曲线</h3>
+        <p>针对随机装备堆积、误售不可挽回及死亡损失卢恩带来的挫败感，设计独立的经济循环：掉落按区域强度分档投放稀有度，一键出售、锁定与回购管理装备流转，卢恩银行保障货币留存，定向鉴定、重铸与超限锻造作为材料回收出口。受限于测试人员少且以非专业玩家为主，由本人实际体验前期内容确立手感与数值基线，再以此为锚点，用蒙特卡洛战力模型校准后续各阶段。</p>
+        <ul class="tags"><li>经济循环</li><li>前期基线</li><li>蒙特卡洛模型</li></ul>
       </div>
       <figure>
         <div class="frame"><img class="zoom" src="model_curve.jpg" alt="数值模型报告截图：各难度相对原版的战斗力曲线，带 10% 到 90% 区间阴影" width="1100" height="880" loading="lazy"></div>
@@ -480,8 +513,8 @@ footer a:hover { color: var(--gold-2); }
       <div class="f-text">
         <span class="f-no">SYSTEM 04</span>
         <h3>难度阶梯与终局内容</h3>
-        <p>多档局内难度，敌人血量、攻击、抗性与掉落随难度缩放。「死亡」以上难度加入改版头目、魇化精英与咒痕，七道咒痕可逐一反转为祝福，形成高难度的风险与回报。终局内容包括斗技场试炼、无尽试炼与分阶段解锁的暗黑商店；定向鉴定、重铸、超限锻造消耗材料，卢恩银行、回购与一键出售管理货币流转，死亡惩罚提供风险成本。</p>
-        <ul class="tags"><li>难度阶梯</li><li>终局循环</li><li>资源回收</li></ul>
+        <p>针对通关后缺乏长线目标、单纯数值加成难以带来新鲜感的问题，设计独立的难度阶梯：反转七道咒痕解锁「死亡」「不可能」难度，引入改版头目与魇化精英改变战斗机制。终局接入按地区划分头目池的斗技场试炼与逐波递增的无尽试炼，暗黑商店随头目进度分阶段解锁，并以每次休息一次复活机会降低挫败感、以死亡遗失未鉴定道具提供风险成本。</p>
+        <ul class="tags"><li>难度阶梯</li><li>终局循环</li><li>风险与回报</li></ul>
       </div>
       <div class="media-stack">
         <div class="media-2">
@@ -544,44 +577,13 @@ footer a:hover { color: var(--gold-2); }
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-no">06 · 迭代案例</span>
-      <h2>四个迭代案例</h2>
+      <h2>三个迭代案例</h2>
       <p class="sec-sub">每个按「版本 → 观察 → 决定 → 结果」记录，最后写复盘。版本号和日期都能在更新日志里查到。</p>
     </div>
 
-    <article class="case reveal" style="--c: var(--gold)">
-      <div class="case-banner"><img src="shot_slash.jpg" alt="" width="1600" height="900" loading="lazy"></div>
-      <div class="case-body">
-        <div class="meta">案例 1 · 规则设计</div>
-        <h3>规则改变型词条「千钧」：五版迭代</h3>
-        <div class="grid2">
-          <div class="card"><div class="k">设计目标</div><p>传说护符「千钧」：满蓄力重击必定打崩敌人架势，支撑「蓄力重击流」构筑；代价是其他攻击不再削减强韧度，收益与代价同时改变规则。</p></div>
-          <div class="card"><div class="k">设计约束</div><p>引擎只在命中瞬间判定是否崩架势，判定逻辑无法修改，只能逐帧读写敌人强韧度；周边敌人扫描有逐帧性能开销。</p></div>
-        </div>
-        <ol class="tl">
-          <li><span class="ver">v0.7</span><span class="when">2026-10-30</span>
-            <dl class="step"><dt>初版</dt><dd>满蓄力一出手，身边敌人的架势全部压低；头目改为削减强韧度上限的 30%。</dd></dl></li>
-          <li><span class="ver">v0.8.1</span><span class="when">11-01</span>
-            <dl class="step"><dt>决定</dt><dd>「千钧」「见切」「猎印」这类要看周围敌人的词条，改成只在戴着时才每帧扫描，没戴不花开销。</dd></dl></li>
-          <li><span class="ver">v0.8.5</span><span class="when">11-01</span>
-            <dl class="step"><dt>观察</dt><dd>没打中的敌人也被压架势，不合直觉；头目不挨打时架势很快回满；拉塔恩这类头目不在游戏的「周围角色」列表里，完全吃不到效果。</dd>
-            <dt>决定</dt><dd>改为打中才生效。因为引擎只在命中瞬间判定，所以出手时先扣头目强韧度上限的 30%，打中时连同这一击的削韧一起结算，没打中就加回去；扣掉的部分保持 15 秒不回；头目另外补进「周围敌人」。</dd></dl></li>
-          <li><span class="ver">v0.10.5</span><span class="when">11-13</span>
-            <dl class="step"><dt>决定</dt><dd>削减比例从 30% 提到 40%；满蓄力出招时身上泛起削韧的光，让玩家看得到触发。</dd></dl></li>
-          <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
-            <dl class="step"><dt>观察</dt><dd>玩家反馈：连招里连续两下满蓄力，第二下常常不扣；明明打中了，先扣的强韧度有时又加回去；体型很大的头目有时不扣。</dd>
-            <dt>原因</dt><dd>蓄力标记跨招式残留；「这一击」的结算窗口关得太晚；距离没有减去敌人的碰撞半径。</dd>
-            <dt>决定</dt><dd>每次新的蓄力开始时先结算上一击；命中判定加上「强韧度下降」和「崩架势」两种信号；距离按体型修正；把连续蓄力的场景写成单元测试。</dd></dl></li>
-        </ol>
-        <div class="retro">
-          <div class="k">复盘</div>
-          <p>「先扣后打」是被引擎判定时机逼出来的方案，玩法上成立。后面几轮问题都出在「一击从哪开始、到哪结束」没定义清楚。v0.10.16 把这个边界写进了测试，之后再改这条规则可以先跑测试；游戏内的最终效果还在等玩家确认。</p>
-        </div>
-      </div>
-    </article>
-
     <article class="case reveal" style="--c: var(--purple)">
       <div class="case-body">
-        <div class="meta">案例 2 · 技术方案</div>
+        <div class="meta">案例 1 · 技术方案</div>
         <h3>启动器被安全软件误报：从规避特征到替换技术栈</h3>
         <div class="grid2">
           <div class="card"><div class="k">问题</div><p>部分安全软件（如火绒的「系统加固」）在玩家打开启动器、点按钮、崩溃检测时弹出「利用 PowerShell 执行可疑脚本」，玩家会以为整合包带毒。</p></div>
@@ -612,17 +614,19 @@ footer a:hover { color: var(--gold-2); }
 
     <article class="case reveal" style="--c: var(--blue)">
       <div class="case-body">
-        <div class="meta">案例 3 · 数值验证</div>
-        <h3>成长曲线：用蒙特卡洛模型定位成长失衡</h3>
+        <div class="meta">案例 2 · 数值验证</div>
+        <h3>成长曲线：以前期手感为基线，用模型校准后续阶段</h3>
         <div class="grid2">
-          <div class="card"><div class="k">问题</div><p>随机装备、157 个词条和敌人随机叠在一起，强度没法靠手感判断；前身项目留下的强度模型基于旧数据，已经不准。</p></div>
+          <div class="card"><div class="k">问题</div><p>测试人员少且以非专业玩家为主，仅凭反馈难以完成数值校准；随机装备、157 个词条与敌人随机叠加后，强度也无法单靠手感判断。</p></div>
           <div class="card"><div class="k">设计约束</div><p>模型必须和游戏里生成装备的逻辑一致，否则结论没有意义；改一次数值后要能很快重跑。</p></div>
         </div>
         <div class="case-cols has-media">
           <div>
             <ol class="tl">
-              <li><span class="ver">搭建</span><span class="when">2026-10-30</span>
-                <dl class="step"><dt>做法</dt><dd>直接调用游戏内鉴定用的同一份 Rust 代码导出装备池（每类每档 400 件），用蒙特卡洛模拟一个角色按流程拿装备、配装、打敌人；对比「原版 / 不随机敌人 / 随机敌人」三种模式，输出强度曲线和词条强度排名。</dd>
+              <li><span class="ver">基线</span><span class="when">开发早期</span>
+                <dl class="step"><dt>做法</dt><dd>由本人实际体验前期内容，确立开局阶段的手感与数值基线，作为后续推演的锚点。</dd></dl></li>
+              <li><span class="ver">建模</span><span class="when">2026-10-30</span>
+                <dl class="step"><dt>做法</dt><dd>以前期基线为锚点，调用游戏内鉴定用的同一份代码导出装备池（每类每档 400 件），用蒙特卡洛模拟角色按流程获取装备、配装与战斗，推演并校准后续各阶段；对比「原版 / 不随机敌人 / 随机敌人」三种模式，输出成长曲线与词条强度排名。</dd>
                 <dt>提速</dt><dd>Python 版 200 轮要 575 秒，移植到 Rust 后 20 秒；两版的词条排名一致，其余差异在随机种子误差以内。</dd></dl></li>
               <li><span class="ver">v0.9</span><span class="when">11-04</span>
                 <dl class="step"><dt>定位</dt><dd>模型显示幽影之地后期近战战力约为原版 12 倍，法术仅 2～3 倍，存在成长失衡。</dd>
@@ -646,8 +650,9 @@ footer a:hover { color: var(--gold-2); }
     </article>
 
     <article class="case reveal" style="--c: var(--grey)">
+      <div class="case-banner"><img src="shot_slash.jpg" alt="" width="1600" height="900" loading="lazy"></div>
       <div class="case-body">
-        <div class="meta">案例 4 · 兼容与边界</div>
+        <div class="meta">案例 3 · 兼容与边界</div>
         <h3>第三方随机器导致的软锁：先止损，再查根因</h3>
         <div class="grid2">
           <div class="card"><div class="k">问题</div><p>开敌人随机时，唤灵蜗牛被换到尤米尔的头目场地，两只随从打完只亮血条，蜗牛本体不出现，战斗无法结束（软锁）。</p></div>
@@ -758,7 +763,7 @@ footer a:hover { color: var(--gold-2); }
 
 <footer>
   <div class="wrap">
-    <span>Xiangpeng Deng · 游戏系统策划 / 技术策划 · 页面整理于 2026-11-22</span>
+    <span>邓祥鹏 Xiangpeng Deng · 游戏系统策划 / 技术策划 · 页面整理于 2026-11-22</span>
     <span class="flinks">
       <a href="https://github.com/xp271" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.bilibili.com/video/BV1k1sn6bES9/" target="_blank" rel="noopener">B 站宣传视频</a>
