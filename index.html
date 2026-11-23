@@ -170,7 +170,7 @@ td.num { font-variant-numeric: tabular-nums; }
 .cmp { min-width: 560px; }
 .cmp th:nth-child(3) { color: var(--gold); }
 .cmp td:first-child { white-space: nowrap; font-weight: 500; color: var(--ink); }
-.cmp td:nth-child(2) { color: var(--muted); width: 22%; }
+.cmp td:nth-child(2) { color: var(--muted); width: 30%; }
 .cmp td:nth-child(3) { color: var(--ink); }
 .cmp tr:last-child td { border-bottom: 0; }
 @media (max-width: 640px) {
@@ -181,8 +181,8 @@ td.num { font-variant-numeric: tabular-nums; }
   .cmp tr:last-child { border-bottom: 0; }
   .cmp td { border: 0; padding: 2px 6px; }
   .cmp td:first-child { font-size: 15px; color: var(--gold); margin-bottom: 4px; }
-  .cmp td:nth-child(2)::before { content: "原版："; }
-  .cmp td:nth-child(3)::before { content: "暗黑重铸："; color: var(--gold); }
+  .cmp td:nth-child(2)::before { content: "原版问题："; }
+  .cmp td:nth-child(3)::before { content: "设计："; color: var(--gold); }
 }
 .feature { display: grid; gap: 26px; align-items: center; padding: 34px 0; border-top: 1px solid var(--line); }
 .feature:first-of-type { border-top: 0; padding-top: 0; }
@@ -194,6 +194,10 @@ td.num { font-variant-numeric: tabular-nums; }
 .f-no { font-family: var(--mono); font-size: 13px; color: var(--c); letter-spacing: .2em; }
 .feature h3 { font-family: var(--display); font-weight: 400; font-size: clamp(26px, 3vw, 32px); margin: 4px 0 12px; }
 .feature p { color: var(--ink-2); }
+.pts { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 10px; }
+.pts li { position: relative; padding: 10px 12px 10px 14px; background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--c); border-radius: 6px; font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+.pts .q { display: block; font-size: 13px; color: var(--c); margin-bottom: 2px; }
+.pts li.rule { border-left-style: dashed; }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; }
 .tags li { font-size: 12px; padding: 2px 9px; border-radius: 4px; background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--line); }
 .media-stack { display: grid; gap: 12px; }
@@ -214,7 +218,7 @@ td.num { font-variant-numeric: tabular-nums; }
 
 /* ---------- gallery ---------- */
 .gallery { display: grid; gap: 12px; grid-template-columns: 1fr; }
-@media (min-width: 720px) { .gallery { grid-template-columns: repeat(3, 1fr); } .gallery .big { grid-column: span 2; grid-row: span 2; } .gallery .wide { grid-column: 1 / -1; } }
+@media (min-width: 720px) { .gallery { grid-template-columns: repeat(3, 1fr); grid-auto-flow: dense; } .gallery .big { grid-column: span 2; grid-row: span 2; } .gallery .wide { grid-column: 1 / -1; } }
 .gallery figure { position: relative; }
 .gallery .frame { height: 100%; }
 .gallery .frame img { height: 100%; object-fit: cover; }
@@ -452,13 +456,16 @@ footer a:hover { color: var(--gold-2); }
     <div class="cmp-wrap reveal">
       <div class="tbl-wrap">
         <table class="cmp">
-          <thead><tr><th>系统</th><th>原版</th><th>暗黑重铸（自主设计）</th></tr></thead>
+          <thead><tr><th>系统</th><th>原版存在的问题</th><th>暗黑重铸的设计</th></tr></thead>
           <tbody>
-            <tr><td>装备获取</td><td>固定装备，拾取即定型</td><td>掉落未鉴定道具，鉴定时随机生成底材、补正、元素、4 档稀有度与词条</td></tr>
-            <tr><td>构筑</td><td>依靠固定装备与护符组合</td><td>157 个词条族（64 个改变规则）；定向鉴定、许愿石、词条继承与重铸，让玩家朝目标流派推进</td></tr>
-            <tr><td>经济</td><td>卢恩用于升级与购物</td><td>自成循环的装备与材料经济：一键出售、锁定与回购管理装备流转；重铸石、融锻之心、超限锻造石等材料作为消耗出口；暗黑商店以龙心脏与卢恩分区出售；卢恩银行保存货币；死亡遗失部分未鉴定道具</td></tr>
-            <tr><td>难度</td><td>单一难度，周目只提高数值</td><td>多档局内难度；反转七道咒痕解锁「死亡」「不可能」，改版头目与魇化精英改变战斗方式</td></tr>
-            <tr><td>终局</td><td>通关后进入下一周目</td><td>按地区划分头目池的斗技场试炼、逐波递增的无尽试炼、随头目进度分阶段解锁的暗黑商店</td></tr>
+            <tr><td>装备获取</td><td>装备固定，拾取即定型，重复游玩缺少新的追求</td><td>掉落未鉴定道具，鉴定时随机生成底材、补正、元素、4 档稀有度与词条</td></tr>
+            <tr><td>构筑</td><td>流派差异依赖少数固定装备，构筑空间有限</td><td>157 个词条族（64 个改变规则）；定向鉴定、许愿石、词条继承与重铸，让玩家朝目标流派推进</td></tr>
+            <tr><td>经济</td><td>卢恩只用于升级与购物，后期缺少消耗出口</td><td>自成循环的装备与材料经济：一键出售、锁定与回购管理装备流转；重铸石、融锻之心、超限锻造石等材料作为消耗出口；暗黑商店以龙心脏与卢恩分区出售；卢恩银行保存货币</td></tr>
+            <tr><td>难度</td><td>周目只提高数值，缺少机制变化</td><td>击败「黑剑」后开放「死亡」「不可能」难度：七道咒痕同时生效，集满碎片可永久反转为祝福；改版头目与魇化精英改变战斗方式</td></tr>
+            <tr><td>终局</td><td>通关后只能进入下一周目</td><td>按地区划分头目池的斗技场试炼、逐波递增的无尽试炼、随头目进度分阶段解锁的暗黑商店</td></tr>
+            <tr><td>异常状态</td><td>多数敌人免疫发狂与咒死，咒死又是即死，两种异常几乎无法用于构筑</td><td>所有敌人都能中：发狂扣 5% 血量并削 30% 架势，咒死改为 60 秒内异常抗性降低</td></tr>
+            <tr><td>商人</td><td>暗黑商店接管战灰与法术后，原版商人失去探索价值</td><td>商人的战灰栏位改为所在地区的未鉴定道具与「小极品」传说武器</td></tr>
+            <tr><td>支线奖励</td><td>固定装备奖励无法融入刷宝体系</td><td>改为同一件装备的史诗版本（补正偏好、词条齐全），最后一环给未鉴定传说，保留原版奖励的辨识度</td></tr>
           </tbody>
         </table>
       </div>
@@ -470,6 +477,10 @@ footer a:hover { color: var(--gold-2); }
         <h3>装备生成与可控随机</h3>
         <p>针对纯随机掉落导致目标流派难以成型的问题，设计「可控随机」机制：掉落以未鉴定道具投放，鉴定时按底材、补正、元素、4 档稀有度与词条实时生成；玩家可通过一键鉴定、定向鉴定、许愿石，以及装备工坊中的词条继承、武器重铸与超限锻造，逐步逼近目标装备。</p>
         <ul class="tags"><li>运行时生成</li><li>可控随机</li><li>存档持久化</li></ul>
+        <ul class="pts">
+          <li><span class="q">问题：元素属性容易因敌人对元素的减伤沦为劣势选项</span>武器元素有九种结果、概率均等；总伤害与纯物理持平，拆分属性与纯元素略高，以抵消敌人对元素更高的减伤。</li>
+          <li><span class="q">问题：稀有度只体现在攻击力上时，高低档差异不直观</span>战技伤害（×0.7～1.0）、致命一击（×1.2～1.8）与防具减伤按稀有度分层，让稀有度体现在手感上。</li>
+        </ul>
       </div>
       <figure>
         <div class="panel"><img class="zoom" src="rarity_strip.jpg" alt="同一件武器的四种稀有度图标：灰、蓝、紫、金底光" width="504" height="252" loading="lazy"></div>
@@ -483,6 +494,12 @@ footer a:hover { color: var(--gold-2); }
         <h3>词条池与规则引擎</h3>
         <p>原版没有随机词条，流派差异主要依赖固定装备。为此设计了 157 个词条族的词条池，每族配置数值区间、触发条件与互斥分组；其中 64 个规则改变型词条由运行时规则引擎实现，用于拉开流派差异，触发时配有光效反馈。词条描述沿用原版护符的写法并标注具体数值，装备工坊内置词条百科。</p>
         <ul class="tags"><li>规则引擎</li><li>事件总线</li><li>触发反馈</li><li>词条百科</li></ul>
+        <ul class="pts">
+          <li><span class="q">问题：变体多的词条族容易挤占其他词条的出现机会</span>抽取分两层：先按稀有度决定每个位置是否出词条，再在合格词条中均匀抽取；同组变体合计一份，并按部位补偿，使每个词条整体出现频率一致。</li>
+          <li><span class="q">问题：低血流派按血量绝对值结算，收益会随等级膨胀</span>燃血、绝境、残躯、搏命、回光、血瓮 6 个词条成套设计，统一按损失血量的比例结算。</li>
+          <li><span class="q">问题：多数敌人免疫发狂与咒死，咒死又是即死，两种异常几乎无法用于构筑</span>改为所有敌人都能中：发狂扣 5% 血量并削 30% 架势，咒死改为 60 秒内异常抗性降低。</li>
+          <li class="rule"><span class="q">设计原则</span>新增的护符效果一律做成词条族，不做固定护符，保证所有效果都进入随机池、可以被刷到。</li>
+        </ul>
       </div>
       <div class="media-2">
         <figure>
@@ -502,6 +519,11 @@ footer a:hover { color: var(--gold-2); }
         <h3>掉落经济与成长曲线</h3>
         <p>针对随机装备堆积、误售不可挽回及死亡损失卢恩带来的挫败感，设计独立的经济循环：掉落按区域强度分档投放稀有度，一键出售、锁定与回购管理装备流转，卢恩银行保障货币留存，定向鉴定、重铸与超限锻造作为材料回收出口。受限于测试人员少且以非专业玩家为主，由本人实际体验前期内容确立手感与数值基线，再以此为锚点，用蒙特卡洛战力模型校准后续各阶段。</p>
         <ul class="tags"><li>经济循环</li><li>前期基线</li><li>蒙特卡洛模型</li></ul>
+        <ul class="pts">
+          <li><span class="q">问题：暗黑商店的购买力需要随推进增长</span>头目奖励的龙心脏与星光碎片按地区递进，追忆头目额外 +2，作为暗黑商店货币。</li>
+          <li><span class="q">问题：暗黑商店接管战灰与法术后，原版商人失去探索价值</span>商人的战灰栏位改为所在地区的未鉴定道具与「小极品」传说武器，让商人重新值得寻找。</li>
+          <li><span class="q">问题：原版支线的固定装备奖励无法融入刷宝体系</span>改为同一件装备的史诗版本（补正偏好、词条齐全），最后一环给未鉴定传说，保留原版奖励的辨识度。</li>
+        </ul>
       </div>
       <figure>
         <div class="frame"><img class="zoom" src="model_curve.jpg" alt="数值模型报告截图：各难度相对原版的战斗力曲线，带 10% 到 90% 区间阴影" width="1100" height="880" loading="lazy"></div>
@@ -513,8 +535,15 @@ footer a:hover { color: var(--gold-2); }
       <div class="f-text">
         <span class="f-no">SYSTEM 04</span>
         <h3>难度阶梯与终局内容</h3>
-        <p>针对通关后缺乏长线目标、单纯数值加成难以带来新鲜感的问题，设计独立的难度阶梯：反转七道咒痕解锁「死亡」「不可能」难度，引入改版头目与魇化精英改变战斗机制。终局接入按地区划分头目池的斗技场试炼与逐波递增的无尽试炼，暗黑商店随头目进度分阶段解锁，并以每次休息一次复活机会降低挫败感、以死亡遗失未鉴定道具提供风险成本。</p>
+        <p>针对通关后缺乏长线目标、单纯数值加成难以带来新鲜感的问题，设计独立的难度阶梯与终局循环：击败「黑剑」后开放「死亡」「不可能」难度，引入改版头目与魇化精英改变战斗机制；暗黑商店随头目进度分阶段解锁，每次休息一次复活机会降低挫败感，死亡遗失部分未鉴定道具提供风险成本。</p>
         <ul class="tags"><li>难度阶梯</li><li>终局循环</li><li>风险与回报</li></ul>
+        <ul class="pts">
+          <li><span class="q">问题：高难度只加数值时，惩罚感强而目标感弱</span>「死亡」「不可能」难度中七道咒痕同时生效，在各区域首次击败头目可获得碎片，集满 5 片即将该咒痕永久反转为祝福，把难度惩罚转化为可追求的长线目标。</li>
+          <li><span class="q">问题：高难度会改变整个世界状态，误入代价大</span>入口设在击败「黑剑」玛利喀斯之后，进入需二次确认且不可逆；同一存档中已全部反转咒痕的角色可跳过门槛。</li>
+          <li><span class="q">问题：为高难度另做敌人内容成本高，玩家也难以预判</span>魇化精英直接带上玩家装备中已有的词条，不新增词条，让熟悉的效果反过来成为威胁。</li>
+          <li><span class="q">问题：装备成型后缺少继续挑战高难度的动力</span>超限锻造石只在高难度掉落，每个头目每档只掉一次（「不可能」一次掉两颗），以掉落规则控制追求节奏。</li>
+          <li><span class="q">问题：终局需要可重复、有节奏变化的挑战</span>斗技场试炼按地区划分头目池，魇化精英波次中 20% 的精英换成击杀后回复圣杯瓶的粪金龟；无尽试炼由魇化精英与头目轮流出场，每波血量 +5%。</li>
+        </ul>
       </div>
       <div class="media-stack">
         <div class="media-2">
@@ -557,17 +586,21 @@ footer a:hover { color: var(--gold-2); }
     <div class="sec-head reveal">
       <span class="sec-no">05 · 游戏内画面</span>
       <h2>实机画面</h2>
-      <p class="sec-sub">截自宣传视频的原始录像，点击可放大。</p>
+      <p class="sec-sub">不同流派与场景的实机画面，截自开发期间的录像，点击可放大。</p>
     </div>
     <div class="gallery reveal">
-      <figure class="big"><div class="frame"><img class="zoom" src="fight_33.jpg" alt="头目战画面：玩家与「双月骑士」蕾菈娜交战" width="1280" height="720" loading="lazy"></div><figcaption>头目战：「双月骑士」蕾菈娜</figcaption></figure>
-      <figure><div class="frame"><img class="zoom" src="shot_burst.jpg" alt="雾门前爆发出金色光芒" width="1600" height="900" loading="lazy"></div><figcaption>雾门前的金色爆发</figcaption></figure>
-      <figure><div class="frame"><img class="zoom" src="shot_vortex.jpg" alt="金色漩涡光效" width="1600" height="900" loading="lazy"></div><figcaption>金色漩涡</figcaption></figure>
-      <figure><div class="frame"><img class="zoom" src="shot_poison.jpg" alt="绿色毒雾在角色周围扩散" width="1600" height="900" loading="lazy"></div><figcaption>毒雾扩散</figcaption></figure>
-      <figure><div class="frame"><img class="zoom" src="shot_slash.jpg" alt="头目战中的红色斩击轨迹" width="1600" height="900" loading="lazy"></div><figcaption>头目战中的斩击</figcaption></figure>
-      <figure><div class="frame"><img class="zoom" src="shot_beast.jpg" alt="近距离的巨大毛发敌人" width="1600" height="900" loading="lazy"></div><figcaption>随机敌人近景</figcaption></figure>
-      <figure class="big"><div class="frame"><img class="zoom" src="fight_44.jpg" alt="击败头目后的 LEGEND FELLED 提示" width="1280" height="720" loading="lazy"></div><figcaption>击败头目：LEGEND FELLED</figcaption></figure>
-      <figure><div class="frame"><img class="zoom" src="shot_dragon.jpg" alt="青色龙形光效挥出的攻击" width="1600" height="900" loading="lazy"></div><figcaption>青色龙形光效</figcaption></figure>
+      <figure class="big"><div class="frame"><img class="zoom" src="g_sorcery.jpg" alt="法术流派与头目交战，青色法术光效环绕" width="1600" height="900" loading="lazy"></div><figcaption>法术流派 · 头目战</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_hammer.jpg" alt="手持金色圣属性大锤，右下角拾取提示显示未鉴定的防具与锻造石" width="1600" height="900" loading="lazy"></div><figcaption>圣属性大锤 · 击杀后掉落未鉴定道具</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_revive.jpg" alt="金色光柱中复活，画面中央提示「对勇于挑战者的馈赠」" width="1600" height="900" loading="lazy"></div><figcaption>高难度 · 首次死亡触发「馈赠」复活</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_beast.jpg" alt="金色光效的传说武器与巨型头目交战" width="1600" height="900" loading="lazy"></div><figcaption>传说武器 · 巨型头目</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_caster.jpg" alt="红衣角色施放法术，右侧列出生效中的增益状态" width="1600" height="900" loading="lazy"></div><figcaption>施法流派 · 右侧为生效中的词条增益</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_spirits.jpg" alt="地下墓地中青色灵体光效环绕角色" width="1600" height="900" loading="lazy"></div><figcaption>地下墓地 · 青色灵体光效</figcaption></figure>
+      <figure class="big"><div class="frame"><img class="zoom" src="g_blackhole.jpg" alt="紫色天空下的黑洞法术与头目" width="1600" height="900" loading="lazy"></div><figcaption>黑洞法术 · 头目战</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_scythe.jpg" alt="地下墓地中镰刀挥出金色火焰" width="1600" height="900" loading="lazy"></div><figcaption>火焰镰刀 · 地下墓地</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_halberd.jpg" alt="红衣角色手持长戟对战带翼头目" width="1600" height="900" loading="lazy"></div><figcaption>长戟 · 双头目战</figcaption></figure>
+      <figure class="big"><div class="frame"><img class="zoom" src="g_workshop.jpg" alt="装备工坊界面：左侧装备列表，中间词条继承，右侧背包" width="1600" height="900" loading="lazy"></div><figcaption>装备工坊 · 词条继承界面</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_greatsword.jpg" alt="大剑角色在石板路上迎战大型头目" width="1600" height="900" loading="lazy"></div><figcaption>近战大剑 · 野外头目战</figcaption></figure>
+      <figure><div class="frame"><img class="zoom" src="g_rain.jpg" alt="雨夜中近身迎战精英敌人" width="1600" height="900" loading="lazy"></div><figcaption>雨夜近战 · 精英敌人</figcaption></figure>
       <figure class="wide"><div class="panel"><img class="zoom" src="grace_strip.jpg" alt="赐福菜单新增功能的一排图标，沿用原版图标的边框风格" width="960" height="244" loading="lazy"></div><figcaption style="position:static;background:none;color:var(--muted);padding:10px 0 0">赐福菜单里新增功能的图标，沿用原版菜单图标的边框和色调。</figcaption></figure>
     </div>
   </div>
