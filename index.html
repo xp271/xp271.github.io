@@ -239,6 +239,21 @@ td.num { font-variant-numeric: tabular-nums; }
 .case-cols { display: grid; gap: 22px; }
 @media (min-width: 900px) { .case-cols.has-media { grid-template-columns: 3fr 2fr; gap: 32px; align-items: start; } }
 .case-media .panel { padding: 10px; }
+.case .tbl-wrap { margin: 0 0 22px; }
+table.opt { font-size: 14px; background: var(--surface-2); border-radius: 8px; overflow: hidden; }
+table.opt th { background: transparent; }
+table.opt td:last-child { white-space: nowrap; color: var(--c); }
+table.opt tr:last-child td { border-bottom: 0; }
+@media (max-width: 640px) {
+  table.opt thead { display: none; }
+  table.opt, table.opt tbody, table.opt tr, table.opt td { display: block; width: auto; }
+  table.opt tr { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.opt tr:last-child { border-bottom: 0; }
+  table.opt td { border: 0; padding: 1px 0; white-space: normal !important; }
+  table.opt td:first-child { color: var(--ink); font-weight: 500; }
+  table.opt td:nth-child(2) { color: var(--ink-2); font-size: 13.5px; }
+  table.opt td:last-child { font-size: 13px; }
+}
 ol.tl { list-style: none; padding: 0; margin: 0 0 18px; position: relative; }
 ol.tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
 ol.tl > li { position: relative; padding-left: 30px; margin-bottom: 16px; }
@@ -616,31 +631,41 @@ footer a:hover { color: var(--gold-2); }
 
     <article class="case reveal" style="--c: var(--purple)">
       <div class="case-body">
-        <div class="meta">案例 1 · 技术方案</div>
-        <h3>启动器被安全软件误报：从规避特征到替换技术栈</h3>
+        <div class="meta">案例 1 · 玩家体验</div>
+        <h3>首次启动就被安全软件拦截：消除进入游戏前的信任门槛</h3>
         <div class="grid2">
-          <div class="card"><div class="k">问题</div><p>部分安全软件（如火绒的「系统加固」）在玩家打开启动器、点按钮、崩溃检测时弹出「利用 PowerShell 执行可疑脚本」，玩家会以为整合包带毒。</p></div>
-          <div class="card"><div class="k">设计约束</div><p>不能要求玩家去改安全软件设置；启动器同时负责启动、数据生成、诊断包和更新，不能停更去重写。</p></div>
+          <div class="card"><div class="k">问题</div><p>部分安全软件（如火绒）在玩家打开启动器时弹出「执行可疑脚本」的警告。玩家还没进入游戏，第一印象就是「整合包带毒」，容易直接放弃；这类流失发生在游戏之外，玩家也很少会反馈。</p></div>
+          <div class="card"><div class="k">设计约束</div><p>不能把门槛转嫁给玩家，引导玩家关闭或放宽安全防护既提高上手难度，也不应鼓励；已有玩家的操作习惯不能被打断；启动器同时承担启动、存档备份与更新，不能停更重做。</p></div>
+        </div>
+        <div class="tbl-wrap">
+          <table class="opt">
+            <thead><tr><th>可选方案</th><th>对玩家的影响</th><th>取舍</th></tr></thead>
+            <tbody>
+              <tr><td>写教程，引导玩家把整合包加入信任</td><td>每个新玩家都要多一步操作，且要求降低安全设置</td><td>不采用</td></tr>
+              <tr><td>去掉最容易被判为可疑的启动方式</td><td>玩家无感知，成本低</td><td>先行采用（v0.10.7）</td></tr>
+              <tr><td>更换启动器底层实现，界面与操作保持不变</td><td>玩家无需重新学习，根除触发条件</td><td>最终采用（v0.10.14）</td></tr>
+            </tbody>
+          </table>
         </div>
         <div class="case-cols has-media">
           <div>
             <ol class="tl">
               <li><span class="ver">v0.10.7</span><span class="when">2026-11-14</span>
-                <dl class="step"><dt>决定</dt><dd>先去掉最像恶意脚本的几个特征：不再隐藏窗口启动、不再传编码过的命令、不再从系统临时文件夹运行；诊断包也不再读取杀毒软件的记录。</dd></dl></li>
+                <dl class="step"><dt>决定</dt><dd>先做低成本处理：去掉隐藏窗口、编码命令、从临时目录运行等最容易被判定为可疑的启动方式，诊断包也不再读取安全软件的记录。</dd></dl></li>
               <li><span class="ver">v0.10.14</span><span class="when">11-18</span>
-                <dl class="step"><dt>观察</dt><dd>仍有安全软件把整合包误报成病毒。</dd>
-                <dt>决定</dt><dd>启动器整体从 PowerShell 改写为 Python（随包带运行环境）+ WebView2 网页界面，不再经过 Windows 的脚本程序；界面和用法保持不变；去掉「经典界面」，只维护一套。旧脚本保留下来做对照测试。</dd>
-                <dt>结果</dt><dd>触发这类拦截的条件（运行 PowerShell 脚本）不再存在；玩家不需要重新学习操作。</dd></dl></li>
+                <dl class="step"><dt>观察</dt><dd>仍有安全软件将整合包误报为病毒，说明只规避特征无法根治。</dd>
+                <dt>决定</dt><dd>从根源移除触发条件：更换启动器的底层实现，不再经过系统脚本程序。界面布局与操作完全保持不变，同时合并为只维护一套界面，避免两套界面带来的说明与维护成本。</dd>
+                <dt>结果</dt><dd>触发拦截的条件不再存在；玩家无需重新学习操作，更新说明一句话即可讲清。</dd></dl></li>
             </ol>
           </div>
           <figure class="case-media">
-            <div class="frame"><img class="zoom" src="launcher.jpg" alt="改写后的启动器界面" width="1100" height="620" loading="lazy"></div>
-            <figcaption>改写后的启动器：Python 后端 + 网页界面，玩家看到的布局和操作不变。</figcaption>
+            <div class="frame"><img class="zoom" src="launcher.jpg" alt="改版后的启动器界面" width="1100" height="620" loading="lazy"></div>
+            <figcaption>改版后的启动器：底层实现更换，玩家看到的布局与操作不变。</figcaption>
           </figure>
         </div>
         <div class="retro">
           <div class="k">复盘</div>
-          <p>第一次只改了特征，规则一变就可能再被拦。第二次的迁移成本高得多，但处理的是根源。以后遇到「玩家信任」类问题，会更早评估是否直接换掉触发条件。</p>
+          <p>第一次只规避特征，属于对症处理，安全软件规则一变就可能复发；第二次成本更高，但消除了根因。这类问题的体验损失发生在玩家进入游戏之前，反馈渠道也很难覆盖到，以后遇到「玩家信任」类问题，应更早评估是否直接移除触发条件，而不是等反馈累积。</p>
         </div>
       </div>
     </article>
@@ -685,21 +710,32 @@ footer a:hover { color: var(--gold-2); }
     <article class="case reveal" style="--c: var(--grey)">
       <div class="case-banner"><img src="shot_slash.jpg" alt="" width="1600" height="900" loading="lazy"></div>
       <div class="case-body">
-        <div class="meta">案例 3 · 兼容与边界</div>
-        <h3>第三方随机器导致的软锁：先止损，再查根因</h3>
+        <div class="meta">案例 3 · 随机性与可完成性</div>
+        <h3>敌人随机导致头目战软锁：守住「必须能打完」的底线</h3>
         <div class="grid2">
-          <div class="card"><div class="k">问题</div><p>开敌人随机时，唤灵蜗牛被换到尤米尔的头目场地，两只随从打完只亮血条，蜗牛本体不出现，战斗无法结束（软锁）。</p></div>
-          <div class="card"><div class="k">设计约束</div><p>敌人随机由第三方随机器生成，不随整合包分发，我们只能改交给它的预设；诊断包里没有那一份事件脚本。</p></div>
+          <div class="card"><div class="k">问题</div><p>开启敌人随机时，唤灵蜗牛被换到尤米尔的头目场地：两只随从被击败后只剩血条，蜗牛本体始终不出现，战斗无法结束，玩家被卡在这一关（软锁）。对玩家来说，这是比「难」更严重的问题：无论怎么努力都无法继续。</p></div>
+          <div class="card"><div class="k">设计约束</div><p>敌人随机由第三方工具生成、不随整合包分发，只能调整交给它的预设；手头没有出问题那一局的完整数据，根因暂时无法证实。</p></div>
+        </div>
+        <div class="tbl-wrap">
+          <table class="opt">
+            <thead><tr><th>可选方案</th><th>对玩家的影响</th><th>取舍</th></tr></thead>
+            <tbody>
+              <tr><td>等查明根因再修</td><td>修复前玩家可能继续卡关</td><td>不采用</td></tr>
+              <tr><td>关闭整套敌人随机</td><td>不再卡关，但失去敌人随机的全部乐趣</td><td>不采用</td></tr>
+              <tr><td>只把两只唤灵蜗牛排除出随机</td><td>不再卡关；原场地照样换成别的头目，其余随机不受影响</td><td>采用（v0.10.16）</td></tr>
+            </tbody>
+          </table>
         </div>
         <ol class="tl">
           <li><span class="ver">排查</span><span class="when">2026-11-20</span>
-            <dl class="step"><dt>观察</dt><dd>运行日志显示蜗牛在场地里，但从没被激活。外部报告提出的两个原因，对照参数后都排除了。更可能的原因是随机器合并事件时套用了场地模板，关掉了它的 AI 和碰撞，但没有那一局的事件文件，无法证实。</dd></dl></li>
+            <dl class="step"><dt>观察</dt><dd>记录显示蜗牛已经在场地中，但从未被激活。外部报告提出的两种原因经核对均被排除；更可能是随机工具组合战斗流程时，套用了原场地的头目设定，但缺少那一局的数据，无法证实。</dd></dl></li>
           <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
-            <dl class="step"><dt>决定</dt><dd>在随机器预设里让两只唤灵蜗牛不再被换走，它们原来的场地照样换成别的头目。损失两只头目的随机性，换来不会卡关。</dd></dl></li>
+            <dl class="step"><dt>决定</dt><dd>优先保证可完成性：只把这两只唤灵蜗牛排除出随机，它们原来的场地照样换成别的头目，影响范围最小。</dd>
+            <dt>结果</dt><dd>下次重新随机后生效；牺牲两只头目的随机性，换来所有玩家都不会在这里卡关。</dd></dl></li>
         </ol>
         <div class="retro">
           <div class="k">复盘</div>
-          <p>根因还没证实。先用最小的改动止住卡关，把排查记录留下，排除掉的方向不再重复追；等拿到能复现的那一局数据再回头处理。</p>
+          <p>软锁是对玩家伤害最大的一类问题，处理顺序应是先止损、再查根因，止损方案要尽量只动出问题的部分。更进一步，引入随机内容时应预先定义「必须能打完」的底线，并为高风险组合预留排除名单；排查中已排除的方向记录下来不再重复追查，等拿到能复现的数据再回头处理。</p>
         </div>
       </div>
     </article>
