@@ -244,6 +244,9 @@ table.opt { font-size: 14px; background: var(--surface-2); border-radius: 8px; o
 table.opt th { background: transparent; }
 table.opt td:last-child { white-space: nowrap; color: var(--c); }
 table.opt tr:last-child td { border-bottom: 0; }
+table.opt.evo td:first-child { white-space: nowrap; width: 5.5em; }
+table.opt.evo td:nth-child(2) { width: 38%; color: var(--muted); }
+table.opt.evo td:last-child { white-space: normal; }
 @media (max-width: 640px) {
   table.opt thead { display: none; }
   table.opt, table.opt tbody, table.opt tr, table.opt td { display: block; width: auto; }
@@ -253,6 +256,7 @@ table.opt tr:last-child td { border-bottom: 0; }
   table.opt td:first-child { color: var(--ink); font-weight: 500; }
   table.opt td:nth-child(2) { color: var(--ink-2); font-size: 13.5px; }
   table.opt td:last-child { font-size: 13px; }
+  table.opt.evo td { width: auto !important; white-space: normal !important; }
 }
 ol.tl { list-style: none; padding: 0; margin: 0 0 18px; position: relative; }
 ol.tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 1px; background: var(--line-2); }
@@ -630,42 +634,48 @@ footer a:hover { color: var(--gold-2); }
     </div>
 
     <article class="case reveal" style="--c: var(--purple)">
+      <div class="case-banner"><img src="g_revive.jpg" alt="" width="1600" height="900" loading="lazy"></div>
       <div class="case-body">
-        <div class="meta">案例 1 · 玩家体验</div>
-        <h3>首次启动就被安全软件拦截：消除进入游戏前的信任门槛</h3>
+        <div class="meta">案例 1 · 难度与动机</div>
+        <h3>咒痕：把高难度的惩罚变成可追求的目标</h3>
         <div class="grid2">
-          <div class="card"><div class="k">问题</div><p>部分安全软件（如火绒）在玩家打开启动器时弹出「执行可疑脚本」的警告。玩家还没进入游戏，第一印象就是「整合包带毒」，容易直接放弃；这类流失发生在游戏之外，玩家也很少会反馈。</p></div>
-          <div class="card"><div class="k">设计约束</div><p>不能把门槛转嫁给玩家，引导玩家关闭或放宽安全防护既提高上手难度，也不应鼓励；已有玩家的操作习惯不能被打断；启动器同时承担启动、存档备份与更新，不能停更重做。</p></div>
+          <div class="card"><div class="k">问题</div><p>只提高敌人数值的高难度，惩罚感强而目标感弱：玩家只感到被数值压制，打完一个头目也没有新的追求，缺少继续挑战的理由。</p></div>
+          <div class="card"><div class="k">设计约束</div><p>惩罚要能被玩家理解和应对，而不是单纯的数值削弱；高难度会改变整个世界状态，入口要避免误入；还要照顾多角色、多周目的玩家。</p></div>
         </div>
         <div class="tbl-wrap">
-          <table class="opt">
-            <thead><tr><th>可选方案</th><th>对玩家的影响</th><th>取舍</th></tr></thead>
+          <table class="opt evo">
+            <thead><tr><th>咒痕</th><th>初版</th><th>调整后</th></tr></thead>
             <tbody>
-              <tr><td>写教程，引导玩家把整合包加入信任</td><td>每个新玩家都要多一步操作，且要求降低安全设置</td><td>不采用</td></tr>
-              <tr><td>去掉最容易被判为可疑的启动方式</td><td>玩家无感知，成本低</td><td>先行采用（v0.10.7）</td></tr>
-              <tr><td>更换启动器底层实现，界面与操作保持不变</td><td>玩家无需重新学习，根除触发条件</td><td>最终采用（v0.10.14）</td></tr>
+              <tr><td>烙印</td><td>印记一直留到换下一个敌人，头目战等于整场伤害翻倍</td><td>每 15 秒烙印 5 秒，留出应对窗口（v0.9.2）</td></tr>
+              <tr><td>回响 → 沉寂</td><td>受到的伤害 3 秒后再回响一次，与玩家的操作无关</td><td>每 5 秒未命中敌人，造成伤害 −5%（最多 5 层），命中即清零，用持续进攻化解（v0.9.2）</td></tr>
+              <tr><td>沉寂</td><td>只有 30 米内、刚出过招时命中才清零，远处的箭、投掷与慢速法术清不掉层数，远程流派吃亏</td><td>任何攻击命中都清零（v0.9.4）</td></tr>
+              <tr><td>千变</td><td>看同一招式是否连续打同一个敌人，效果挂在敌人身上，玩家看不出来</td><td>看最近 20 秒用过几种招式：只用 1 种 −60%，每多 1 种少降 15%，5 种不扣；反转后每多 1 种 +10%，状态栏显示当前档位（v0.9.10）</td></tr>
             </tbody>
           </table>
         </div>
         <div class="case-cols has-media">
           <div>
             <ol class="tl">
-              <li><span class="ver">v0.10.7</span><span class="when">2026-11-14</span>
-                <dl class="step"><dt>决定</dt><dd>先做低成本处理：去掉隐藏窗口、编码命令、从临时目录运行等最容易被判定为可疑的启动方式，诊断包也不再读取安全软件的记录。</dd></dl></li>
-              <li><span class="ver">v0.10.14</span><span class="when">11-18</span>
-                <dl class="step"><dt>观察</dt><dd>仍有安全软件将整合包误报为病毒，说明只规避特征无法根治。</dd>
-                <dt>决定</dt><dd>从根源移除触发条件：更换启动器的底层实现，不再经过系统脚本程序。界面布局与操作完全保持不变，同时合并为只维护一套界面，避免两套界面带来的说明与维护成本。</dd>
-                <dt>结果</dt><dd>触发拦截的条件不再存在；玩家无需重新学习操作，更新说明一句话即可讲清。</dd></dl></li>
+              <li><span class="ver">v0.9</span><span class="when">2026-11-04</span>
+                <dl class="step"><dt>上线</dt><dd>「死亡」「不可能」难度中七道咒痕同时生效，每道对应一片区域；在高难度首次击败该区域的头目可得一片碎片，集满 5 片即永久反转为祝福。惩罚本身成了按区域推进的收集目标。</dd></dl></li>
+              <li><span class="ver">v0.9.2–0.9.10</span><span class="when">11-04～11-09</span>
+                <dl class="step"><dt>观察</dt><dd>部分咒痕过重或与玩家行为无关（见上表）；七个区域以外的头目打完没有碎片，玩家缺少挑战它们的理由。</dd>
+                <dt>决定</dt><dd>逐条调整咒痕规则；七个区域以外的本体头目按难度归入最接近的区域，更多野外与地下城头目也掉碎片。</dd></dl></li>
+              <li><span class="ver">v0.10.6</span><span class="when">11-13</span>
+                <dl class="step"><dt>决定</dt><dd>入口改为击败「黑剑」玛利喀斯、释放「命定之死」之后：确保玩家进入时已具备后期战力，叙事上由褪色者主动迎向死亡，并配合加载提示与首次进入提示铺垫。</dd></dl></li>
+              <li><span class="ver">v0.10.16–17</span><span class="when">11-20～21</span>
+                <dl class="step"><dt>观察</dt><dd>多角色、多周目的玩家每次都要重新击败黑剑，门槛变成了重复劳动。</dd>
+                <dt>决定</dt><dd>同一存档已有角色全部反转咒痕后，其他角色可跳过这道门槛；二周目起无需再击败黑剑。</dd></dl></li>
             </ol>
           </div>
           <figure class="case-media">
-            <div class="frame"><img class="zoom" src="launcher.jpg" alt="改版后的启动器界面" width="1100" height="620" loading="lazy"></div>
-            <figcaption>改版后的启动器：底层实现更换，玩家看到的布局与操作不变。</figcaption>
+            <div class="panel"><img class="zoom" src="curse_icons.jpg" alt="七道咒痕的红色图标与反转后的金色祝福图标" width="1200" height="454" loading="lazy"></div>
+            <figcaption>咒痕图标仿照原版「死亡的咒痕」绘制：未反转时是缺半的红色伤环，反转后拼成完整的金环。</figcaption>
           </figure>
         </div>
         <div class="retro">
           <div class="k">复盘</div>
-          <p>第一次只规避特征，属于对症处理，安全软件规则一变就可能复发；第二次成本更高，但消除了根因。这类问题的体验损失发生在玩家进入游戏之前，反馈渠道也很难覆盖到，以后遇到「玩家信任」类问题，应更早评估是否直接移除触发条件，而不是等反馈累积。</p>
+          <p>惩罚只有和玩家的行为挂钩、能被理解和化解，才会被当作挑战而不是削弱；把「反转」做成按区域推进的收集目标，让高难度本身有了长线进度。门槛设计一开始只考虑了第一次进入，多角色、多周目的重复成本是上线后才补上的，以后设计门槛时应同时考虑第二次、第三次进入的体验。</p>
         </div>
       </div>
     </article>
@@ -708,34 +718,39 @@ footer a:hover { color: var(--gold-2); }
     </article>
 
     <article class="case reveal" style="--c: var(--grey)">
-      <div class="case-banner"><img src="shot_slash.jpg" alt="" width="1600" height="900" loading="lazy"></div>
+      <div class="case-banner"><img src="g_caster.jpg" alt="" width="1600" height="900" loading="lazy"></div>
       <div class="case-body">
-        <div class="meta">案例 3 · 随机性与可完成性</div>
-        <h3>敌人随机导致头目战软锁：守住「必须能打完」的底线</h3>
+        <div class="meta">案例 3 · 构筑与平衡</div>
+        <h3>燃血与血契：让「以血换力」既强又有真实代价</h3>
         <div class="grid2">
-          <div class="card"><div class="k">问题</div><p>开启敌人随机时，唤灵蜗牛被换到尤米尔的头目场地：两只随从被击败后只剩血条，蜗牛本体始终不出现，战斗无法结束，玩家被卡在这一关（软锁）。对玩家来说，这是比「难」更严重的问题：无论怎么努力都无法继续。</p></div>
-          <div class="card"><div class="k">设计约束</div><p>敌人随机由第三方工具生成、不随整合包分发，只能调整交给它的预设；手头没有出问题那一局的完整数据，根因暂时无法证实。</p></div>
+          <div class="card"><div class="k">问题</div><p>用血量替代精力或专注的规则型词条，很容易两头失衡：代价太低就成了无脑最优解，代价太高又没人用；配套的低血流派词条如果按血量绝对值结算，收益还会随等级膨胀。</p></div>
+          <div class="card"><div class="k">设计约束</div><p>代价必须真实存在，血量耗尽就会死亡；同一条规则要对所有攻击一致，玩家才能建立预期；要和其他低血流派词条组合成完整的流派。</p></div>
         </div>
+        <ol class="tl">
+          <li><span class="ver">设计</span><span class="when">2026-11-10</span>
+            <dl class="step"><dt>决定</dt><dd>低血流派 6 个词条成套设计（燃血、绝境、残躯、搏命、回光、血瓮）。强度检查发现，按每 100 点血量结算时，后期轻攻击加成可达 +152%、减伤达 76%，于是统一改为按损失血量的比例结算（每损失 10% 加一档）。</dd></dl></li>
+          <li><span class="ver">v0.10.1</span><span class="when">11-11</span>
+            <dl class="step"><dt>上线</dt><dd>「燃血」：攻击不再消耗精力，改为消耗血量，满血约等于 5 管精力；挥空也扣，血量耗尽会死亡。（「血契」已于 v0.7 上线：法术与战技改为消耗专注值 150% 的血量，扣到 1 点为止。）</dd></dl></li>
+          <li><span class="ver">v0.10.2</span><span class="when">11-11</span>
+            <dl class="step"><dt>观察</dt><dd>近战普通攻击仍消耗精力而不扣血，规则不一致；低血门槛 20% 太窄，状态很难经营。</dd>
+            <dt>决定</dt><dd>所有攻击与战技一律扣血；满血改为只相当于 3 管精力，代价加重；绝境、残躯、搏命的门槛从血量 20% 放宽到 40%，回光从 10% 放宽到 20%。</dd></dl></li>
+          <li><span class="ver">v0.10.15–16</span><span class="when">11-19～20</span>
+            <dl class="step"><dt>观察</dt><dd>「血契」代价过低；玩家发现血量扣到 1 点后可以一直施法。</dd>
+            <dt>决定</dt><dd>代价先提高到专注值的 5 倍，再回调到 4 倍；漏洞按下表三种方案比较后，选择与「燃血」一致的规则。</dd></dl></li>
+        </ol>
         <div class="tbl-wrap">
           <table class="opt">
-            <thead><tr><th>可选方案</th><th>对玩家的影响</th><th>取舍</th></tr></thead>
+            <thead><tr><th>1 点血无限施法的修复方案</th><th>对玩家的影响</th><th>取舍</th></tr></thead>
             <tbody>
-              <tr><td>等查明根因再修</td><td>修复前玩家可能继续卡关</td><td>不采用</td></tr>
-              <tr><td>关闭整套敌人随机</td><td>不再卡关，但失去敌人随机的全部乐趣</td><td>不采用</td></tr>
-              <tr><td>只把两只唤灵蜗牛排除出随机</td><td>不再卡关；原场地照样换成别的头目，其余随机不受影响</td><td>采用（v0.10.16）</td></tr>
+              <tr><td>专注值上限受当前血量限制</td><td>多一条需要理解的上限规则</td><td>不采用</td></tr>
+              <tr><td>血量低于阈值时专注值清零</td><td>引入新的阈值，打断施法节奏</td><td>不采用</td></tr>
+              <tr><td>血量不够照样施放，但血量耗尽会死亡</td><td>与「燃血」规则一致，代价真实、可预期</td><td>采用（v0.10.16）</td></tr>
             </tbody>
           </table>
         </div>
-        <ol class="tl">
-          <li><span class="ver">排查</span><span class="when">2026-11-20</span>
-            <dl class="step"><dt>观察</dt><dd>记录显示蜗牛已经在场地中，但从未被激活。外部报告提出的两种原因经核对均被排除；更可能是随机工具组合战斗流程时，套用了原场地的头目设定，但缺少那一局的数据，无法证实。</dd></dl></li>
-          <li><span class="ver">v0.10.16</span><span class="when">11-20</span>
-            <dl class="step"><dt>决定</dt><dd>优先保证可完成性：只把这两只唤灵蜗牛排除出随机，它们原来的场地照样换成别的头目，影响范围最小。</dd>
-            <dt>结果</dt><dd>下次重新随机后生效；牺牲两只头目的随机性，换来所有玩家都不会在这里卡关。</dd></dl></li>
-        </ol>
         <div class="retro">
           <div class="k">复盘</div>
-          <p>软锁是对玩家伤害最大的一类问题，处理顺序应是先止损、再查根因，止损方案要尽量只动出问题的部分。更进一步，引入随机内容时应预先定义「必须能打完」的底线，并为高风险组合预留排除名单；排查中已排除的方向记录下来不再重复追查，等拿到能复现的数据再回头处理。</p>
+          <p>代价型词条的关键是「代价真实且一致」：同一类代价对所有行为都生效、扣到底就是死亡，玩家才能据此做取舍；按比例结算则避免了收益随等级失控。两条词条都经历了「先偏便宜、再收紧代价」的过程，以后上线前可以先用战力模型估算代价区间，减少上线后的来回调整。</p>
         </div>
       </div>
     </article>
